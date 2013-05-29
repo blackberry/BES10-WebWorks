@@ -1,0 +1,56 @@
+<!--
+ Copyright 2012 Research In Motion Limited.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+        <title>BB10 Template</title>
+        <link href="favicon.ico" rel="icon" type="image/x-icon">
+		<style>body { font-size:20pt; } button { font-size:25pt; padding:15px; } </style>
+    </head>
+    <body>
+    	<u>WAA Push Test App</u><br/><hr/>
+        <div id="server_link"></div>
+        <button onclick="blackberry.app.exit()">Close App</button>
+        <button onclick="app.clearDebug();">Clear Debug</button>
+        <button onclick="app.pushService.destroyChannel(app.destroyChannelCallback)">Destroy Channel</button>
+
+        <div id="debug"></div>
+
+        <script src="local:///chrome/webworks.js"></script>
+
+        <!-- 	To use an external server to make the work-perimeter deployments simpler...
+        <script src="http://waa001cnc.rim.net/bb/BB10PushTest/js/app.js"></script>
+        -->
+
+        <script src="js/app.js"></script>
+
+        <script type="text/javascript">
+        // add load events
+        if (navigator.userAgent.match(/BB10/)) {
+            app.debug('Loading BB10 app');
+            window.addEventListener('load', function(e) {
+                document.addEventListener('webworksready', app.init);
+            }, false);
+        }
+        else {
+        	app.debug('Loading non-BB10 app');
+            window.addEventListener('load', app.init);
+        }
+        </script>
+    </body>
+</html>

@@ -8,8 +8,8 @@
         This is a simple Push sample for BB10 WebWorks apps.
     </description>
 
-    <author href="http://www.rim.com/" email="bthornton@rim.com"
-        rim:copyright="Copyright 2011-2012 Research In Motion Limited">BT</author>
+    <author href="http://www.rim.com/" email="@brentthornton32"
+        rim:copyright="Copyright 2012 Research In Motion Limited">BT</author>
 
     <rim:category name="all" />
 

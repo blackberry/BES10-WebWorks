@@ -26,7 +26,7 @@
     <feature id="blackberry.ui.toast" />    <!-- for toast popup on push -->
     <feature id="blackberry.ui.cover" />    <!-- for window cover update -->
     <feature id="blackberry.invoke" />      <!-- for invoking the server link in browser -->
-    <feature id="blackberry.identity" />    <!-- for getting pin address -->
+    <feature id="blackberry.identity" />    <!-- for getting device pin -->
 
     <rim:invoke-target id="waa.pushtest.target">
         <type>APPLICATION</type>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!--
+ * Copyright 2013 BlackBerry Limited.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
+
+<!-- Set name to the application name: used for BAR/COD and directory on file system -->
+<project default="build" basedir="." name="ECL">
+
+    <echo>Building project ${ant.project.name}</echo>
+
+    <!-- no more arguing with finicky IDEs and environments -->
+    <!-- THIS IS WHERE ANT IS INSTALLED! UPDATE THESE PATHS FOR YOUR ENVIRONMENT! -->
+    <property name="anthome.mac" value="/Developer/RIM/Ant-Build-Script/tools/apache-ant-1.8.2" />
+    <property name="anthome.win" value="C:\Ant-Build-Script\tools\apache-ant-1.8.2" />
+	<condition property="anthome" value="${anthome.win}" else="${anthome.mac}">
+		<os family="windows"/>
+	</condition>
+    <echo>anthome: ${anthome}</echo>
+
+   <!-- set your preferences for this build -->
+
+    <!-- if true, copies the project assets to the ${RippleSites}/${ant.project.name} folder -->
+	<property name="do.build.ripple" value="false"/>
+
+	<!-- set the use.****.sdk property to true for the SDKs you want to use -->
+
+	<property name="use.java.sdk" value="false"/> <!-- if false, next two properties are ignored -->
+		<property name="use.java.device" value="false"/><!-- false implies simulator -->
+		<property name="do.java.build.type" value="debug" /> <!-- debug,beta,release -->
+
+	<property name="use.tablet.sdk" value="false"/> <!-- if false, next two properties are ignored -->
+		<property name="use.tablet.device" value="false"/><!-- false implies simulator -->
+		<property name="do.tablet.build.type" value="debug" /> <!-- debug,beta,release -->
+
+	<property name="use.bb10.sdk" value="true"/> <!-- if false, next two properties are ignored -->
+		<property name="use.bb10.device" value="true"/> <!-- false implies simulator -->
+		<property name="do.bb10.build.type" value="debug" /> <!-- debug,beta,release -->
+
+    <!-- include the targets that do the actual work-->
+    <include file="${anthome}/../buildTasks.xml" />
+
+    <!-- then call the targets that do the job according to the properties you set above -->
+    <target name="build">
+        <!-- cleans, inits, copies src files and zips -->
+        <antcall target="buildTasks.package.preflight" />
+
+        <!-- packages zip and deploys to sim or device -->
+        <antcall target="buildTasks.doBuild" />
+    </target>
+
+	<!-- added for convenience for the once every thirty days that you'll need to use this -->
+	<target name="createAndDeployDebugToken">
+		<antcall target="buildTasks.createDebugToken.bb10" />
+		<antcall target="buildTasks.deployDebugToken.bb10" />
+	</target>
+
+</project>

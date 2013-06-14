@@ -1,0 +1,113 @@
+BB10_ECL - Emergency Contact List Application
+========
+
+## Description
+
+The Emergency Contact List (ECL) Application stores and displays the
+latest emergency contact list.  It allows the user to display and
+search the list and then call, email, or sms the appropriate contact.
+
+The contact list is updated by a push to the device.  When a new list
+is received, a local copy of that list is stored and a notification is
+sent to the Notification Hub.  The user can start the application
+manually or by selecting the hub notification.  Since the data is
+stored locally it is available when offline.
+
+## Data Transports and Upgrading to ECL 
+
+This version of ECL uses JSON (JavaScript Object Notation) as a transport for efficiency.  
+For those upgrading from earlier versions of ECL, you should export your XLS to CSV and 
+then use a standard tool like csv2json (https://github.com/shawnbot/csv2json) to convert 
+that data to a compact and usable transport.  As an alternative, you may do on-the-fly 
+binary conversion of the Excel XLS format with a server-side tool like Apache POI 
+(http://poi.apache.org), but this solution would require a Java Application server and
+is beyond the scope of this document to set up.
+
+There is a blog @ http://devblog.blackberry.com that goes into this migration path in 
+greater detail.
+
+## How to Build
+
+Please make sure you've set up your WebWorks setup to have the BB10 bbui Extension 
+correctly setup as follows:
+	http://devblog.blackberry.com/2013/03/bbui-js-upgrade-required-to-support-blackberry-10-1/
+
+Please follow the stand build instructions at http://developer.blackberry.com/html5
+for setting up your build environment.
+
+The build script in build.xml uses Ant, so that must be installed.
+
+1. Start a command (cmd.exe) or terminal window. cd to the top level for
+   this project where the build.xml files exists.
+
+2. Edit build.xml to point at your Ant installation.  Edit whichever of
+   these is relevant for your build environment.
+
+   <property name="anthome.mac"
+    value="/.../BB10-WebWorks-Community-Samples/Ant-Build-Script/tools/apache-ant-1.8.2"/>
+
+   <property name="anthome.win"
+   value="C:\...\src\Ant-Build-Script\Ant-Build-Script\tools\apache-ant-1.8.2" />
+
+3. To bulid and deploy just execute "ant" on the command line
+
+   $ ant
+
+
+##  File Structure
+
+build.xml - ant build script
+
+config.xml - WebWorks project file.  Contains application parameters and
+permissions.
+
+index.html - Top level application file that initializes WebWorks and loads
+the 1st screen (contactlist.htm).
+
+contactlist.htm - Skeleton markup of Emergency Contact List view
+
+phonelist.htm - Skeleton markup of contact phone list view
+
+details.htm - Skeleton markup of details view
+
+bbui-min.js, bbui-min.css -  bbUI VERSION: 0.9.6.1
+
+index.js - Top level Javascript file that defines app namespace.
+
+contactlist.js - Creates and manages the Emergency Contact List view.
+
+phonelist.js - Creates and manages the phone list view.
+
+details.js - Creates and manages the details view.
+
+eclmodel.js - Holds and saves the contact list.
+
+pushhandlers.js - Handles the push messages.
+
+utils.js - Utility functions.  
+
+img - Contains the application icon and icons used in the application.
+
+
+## Server Component
+
+The server/index.htm is a small test application that can be used to send requests
+to the enterprise server to push an emergency contact list to a device/phone.
+This is a standalone HTML file and can run directly from the BlackBerry filesystem,
+on a simple webserver (like Apache or Nginx), or packaged and deployed as a hybrid app
+itself on BlackBerry platforms.
+
+
+## Known Issues
+
+The context view can be difficult to expand in HTML5 apps. 
+It seems the user must long press menu for 2 seconds before swiping to
+the left.
+
+
+## More Info
+
+The UI uses Webworks and BBUI.js
+
+Icons from Myers Design Limited (http://myersdesign.com/).
+

@@ -160,7 +160,7 @@ app.details = function () {
             item = document.createElement('div');
             item.setAttribute('data-bb-type', 'item'); // Display as bbui.js
             item.setAttribute('data-bb-title', contact.bbPin);
-            item.setAttribute('data-bb-img', 'img/actionbar/bbm.png');
+            item.setAttribute('data-bb-img', 'img/actionbar/device.png');
             item.setAttribute('onclick', "app.utils.pinMessage('" + contact.bbPin + "');");
             item.innerHTML = "BlackBerry PIN Message";
             items.push(item);

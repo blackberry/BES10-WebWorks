@@ -14,13 +14,17 @@
   * limitations under the License.
 -->
 
-<div data-bb-type="screen" data-bb-effect="fade" data-bb-scroll-effect="on" data-bb-indicator="true" id="Demo">
-    <div data-bb-type="title" data-bb-caption="Import Sample Data"></div>
+<div data-bb-type="screen" data-bb-effect="fade" data-bb-scroll-effect="on" data-bb-indicator="true" id="Tools">
+    <div data-bb-type="title" data-bb-caption="Tools"></div>
 
     <div id="listContent" data-bb-type="image-list" data-bb-images="none" data-bb-header-justify="left" data-bb-header-style="solid" data-bb-context="true">
+ 		<br/><center>Click option button below <br/>for a list of actions...</center>
     </div>
     
-    <div data-bb-type="action-bar" data-bb-back-caption="Back" id="demoActionBar">
-        <div data-bb-type="action" id="demoAction" data-bb-style="button" data-bb-img="/img/actionbar/help.png" onclick="app.contactList.openDemoList();">Import data</div> 
+    <div data-bb-type="action-bar" data-bb-back-caption="Back">
+    	<div data-bb-type="action" data-bb-style="button" data-bb-overflow="true" data-bb-img="local:///img/actionbar/device.png" 
+    		onclick="window.open('server/index.htm', 'server');">Push</div> 
+        <div data-bb-type="action" data-bb-style="button" data-bb-overflow="true" data-bb-img="local:///img/actionbar/help.png" 
+        	onclick="app.contactList.openDemoList();">Import</div> 
   	</div>
 </div>

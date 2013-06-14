@@ -27,19 +27,21 @@
     </div>
     
     <div id="listContent" data-bb-type="image-list" data-bb-images="none" data-bb-header-justify="left" data-bb-header-style="solid" data-bb-context="true">
+    		<br/><br/><br/><center>No entries currently<br/>exist in your<br/>Emergency Contact List.</center>
     </div>
     
     <div data-bb-type="context-menu" id="contactActions">
-        <div data-bb-type="action" data-bb-img="/img/actionbar/outgoing_call.png" onclick="app.contactList.doContextMenuCall();">Call</div>
-        <div data-bb-type="action" data-bb-img="/img/actionbar/mail.png" onclick="app.contactList.doContextMenuEmail();">Email</div>
-        <div data-bb-type="action" data-bb-img="/img/actionbar/chat.png" onclick="alert('SMS integration not currently supported by the platform.');">Text</div>
-        <div data-bb-type="action" data-bb-img="/img/actionbar/bbm.png" onclick="app.contactList.doContextMenuPIN();">PIN message</div>
+        <div data-bb-type="action" data-bb-img="local:///img/actionbar/outgoing_call.png" onclick="app.contactList.doContextMenuCall();">Call</div>
+        <div data-bb-type="action" data-bb-img="local:///img/actionbar/mail.png" onclick="app.contactList.doContextMenuEmail();">Email</div>
+        <div data-bb-type="action" data-bb-img="local:///img/actionbar/chat.png" onclick="alert('SMS integration not currently supported by the platform.');">Text</div>
+        <div data-bb-type="action" data-bb-img="local:///img/actionbar/bbm.png" onclick="app.contactList.doContextMenuPIN();">PIN message</div>
     </div>
     
-    <div data-bb-type="action-bar" data-bb-tab-style="highlight">
-        <div data-bb-type="action" data-bb-style="button" data-bb-img="/img/actionbar/search.png" onclick="app.contactList.showSearchField()">Search</div>
-        <div data-bb-type="action" id="demoAction" data-bb-style="button" data-bb-overflow="true" data-bb-img="/img/actionbar/help.png" 
-            onclick="bb.pushScreen('demo.htm', 'demo');">Demo Mode</div>
+    <div data-bb-type="action-bar">
+        <div data-bb-type="action" data-bb-style="button" data-bb-selected="true" data-bb-overflow="true" data-bb-img="local:///img/actionbar/search.png" 
+        	onclick="app.contactList.showSearchField()">Search</div>
+        <div data-bb-type="action" data-bb-style="button" data-bb-overflow="true" data-bb-img="local:///img/actionbar/suitcase.png" 
+            onclick="bb.pushScreen('tools.htm', 'Tools');">Tools</div>
 
     </div>
 </div>    

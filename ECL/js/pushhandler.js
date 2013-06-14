@@ -57,8 +57,7 @@ app.pushHandler = function() {
     pub.failCreatePushService = function(result) {
         console.log("pushHandler.failCreatePushService()");
         if (result == blackberry.push.PushService.INTERNAL_ERROR) {
-            alert("Error: An internal error occurred while calling "
-                  + "blackberry.push.PushService.create. Try restarting the application.");
+            alert("Error: You are likely trying to run this application from the Personal Space, push will be disabled.");
         } else if (result == blackberry.push.PushService.MISSING_INVOKE_TARGET_ID) {
             alert("Error: Called blackberry.push.PushService.create with a missing "
                   + "invokeTargetId value. It usually means a programming error.");

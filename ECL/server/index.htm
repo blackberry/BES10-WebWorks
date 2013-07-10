@@ -24,10 +24,22 @@
     <head>
         <meta charset="utf-8">
         <title>ECL Test</title>
+
+        <style>
+            .error { font-weight: bold; color: #F00; }
+        </style>
+        
+        <script src="json/json2.js"> </script>
+        <script src="json/xls2json.js"> </script>
+        
+        <script>
+            var csvRows = []; var objArr = [];
+            var benchmarkStart, benchmarkParseEnd, benchmarkObjEnd, benchmarkJsonEnd, benchmarkPopulateEnd;
+        </script>
     </head>
 
     <body>
-        <h3>Emergency Contact List (ECL) Test</h3>
+        <h3>Emergency Contact List (ECL) - Server</h3>
 
         Destination PIN / Email: <br />
         <input id="email" type="email" />
@@ -49,6 +61,16 @@
         <input type="radio" name="contentSelection" onclick="setContent(4);">Clear<br>
 
         <textarea id="content" rows="20" cols="80"></textarea>
+    
+        <div id="message"><p></p></div>
+        
+        <form id="convertForm" name="convertForm" onsubmit="return false; ">
+            <label for="csv">
+                <acronym title="comma-separated values">Import Excel / CSV</acronym>:</label><br />
+                <textarea id="csv" name="csv" rows="10" cols="60"></textarea><br />
+            <input type="button" value="Convert" onclick="xlsToJson(); " /> 
+            <input type="reset" />
+        </form>
 
         <br />
        
@@ -163,48 +185,7 @@
                         ];
                 
             var teamList2 = [
-                            {
-                            "title": "US Team2",
-                            "list": [
-                                    {
-                                        "name": "Joseph Smith2",
-                                        "title": "Software Business Analyst",
-                                        "officePhone": "999-488-1111",
-                                        "cellPhone": "519-555-2222",
-                                        "email": "joseph.smith@company.com",
-                                        "bbPin": "2a8e9999",
-                                        "backup": "Dennis Jones4"
-                                    },
-                                    {
-                                        "name": "Shravanthi Doe2",
-                                        "title": "System Specialist",
-                                        "officePhone": "999-488-1111",
-                                        "cellPhone": "519-555-2222",
-                                        "email": "shravanthi.doe@company.com",
-                                        "bbPin": "2222222F",
-                                        "backup": undefined
-                                    },
-                                    {
-                                        "name": "Dennis Jones2",
-                                        "title": "System Specialist",
-                                        "officePhone": "999-488-1111",
-                                        "cellPhone": "519-555-2222",
-                                        "email": "dennis.jones@company.com",
-                                        "bbPin": "3333333F",
-                                        "backup": "Julian"
-                                    },
-                                    {
-                                         "name": "Doreen Smith2",
-                                         "title": "System Specialist",
-                                         "officePhone": "999-488-1111",
-                                         "cellPhone": "519-555-2222",
-                                         "email": "doreen.smith@company.com",
-                                         "bbPin": "3333333F",
-                                         "backup": undefined
-                                    }
-                                    ]
-                            },
-                            {
+                        {
                             "title": "India Team2",
                             "list": [
                                     {
@@ -251,6 +232,47 @@
                                         "email": "arun.smith@company.com",
                                         "bbPin": undefined,
                                         "backup": undefined
+                                    }
+                                    ]
+                            },
+                            {
+                            "title": "US Team2",
+                            "list": [
+                                    {
+                                        "name": "Joseph Smith2",
+                                        "title": "Software Business Analyst",
+                                        "officePhone": "999-488-1111",
+                                        "cellPhone": "519-555-2222",
+                                        "email": "joseph.smith@company.com",
+                                        "bbPin": "2a8e9999",
+                                        "backup": "Dennis Jones4"
+                                    },
+                                    {
+                                        "name": "Shravanthi Doe2",
+                                        "title": "System Specialist",
+                                        "officePhone": "999-488-1111",
+                                        "cellPhone": "519-555-2222",
+                                        "email": "shravanthi.doe@company.com",
+                                        "bbPin": "2222222F",
+                                        "backup": undefined
+                                    },
+                                    {
+                                        "name": "Dennis Jones2",
+                                        "title": "System Specialist",
+                                        "officePhone": "999-488-1111",
+                                        "cellPhone": "519-555-2222",
+                                        "email": "dennis.jones@company.com",
+                                        "bbPin": "3333333F",
+                                        "backup": "Julian"
+                                    },
+                                    {
+                                         "name": "Doreen Smith2",
+                                         "title": "System Specialist",
+                                         "officePhone": "999-488-1111",
+                                         "cellPhone": "519-555-2222",
+                                         "email": "doreen.smith@company.com",
+                                         "bbPin": "3333333F",
+                                         "backup": undefined
                                     }
                                     ]
                             }
@@ -352,7 +374,7 @@
 
                 
                 function setContent(reqNum) {
-                    var teamList = (reqNum == 1) ? teamList1 : (reqNum == 2) ? teamList2 : (reqNum == 3) ? teamList3 : '{[]}';
+                    var teamList = (reqNum == 1) ? teamList1 : (reqNum == 2) ? teamList2 : (reqNum == 3) ? teamList3 : [{"title":"","list":""}];
                     
                     var jsonStr = JSON.stringify(teamList);
                     document.getElementById("content").value = jsonStr;
@@ -376,8 +398,8 @@
                             document.getElementById("result").innerHtml = "Success";
                         }
                     }
-                    
                     xmlhttp.setRequestHeader("Content-Type", "text/plain");
+                    //xmlhttp.setRequestHeader("Content-Encoding", "gzip");
                     xmlhttp.send(content);
                 }
                 

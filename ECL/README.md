@@ -108,6 +108,7 @@ the left.
 ## More Info
 
 The UI uses Webworks and BBUI.js
-
+The JS inflase rawinflate.js routines by Dan Kogai @ https://github.com/dankogai
+The JSON parser in JavaScript by Douglas Crockford @ http://javascript.crockford.com
 Icons from Myers Design Limited (http://myersdesign.com/).
 

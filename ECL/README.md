@@ -1,4 +1,4 @@
-BB10_ECL - Emergency Contact List Application
+BB10 Emergency Contact List
 ========
 
 ## Description

@@ -65,7 +65,10 @@ app.contactList = function() {'use strict';
 		var item, i, j;
 		var eclList = app.model.getList();
 
-		if (!eclList) {
+		if (!eclList) return;
+		
+		if (eclList.length==1 && eclList[0].list=='') {
+			console.log('Empty data set retrieved');
 			listDivElement.style.display = "block";
 			return;
 		}

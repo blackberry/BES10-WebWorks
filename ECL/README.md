@@ -3,7 +3,7 @@ BB10_ECL - Emergency Contact List Application
 
 ## Description
 
-NEW - Now with compression!  Compress your payload using LZMA and break
+NEW!!! Now has integrated compression routines. Compress your payload using LZMA and break
 past the 8K limit for your contacts!
 
 The Emergency Contact List (ECL) Application stores and displays the

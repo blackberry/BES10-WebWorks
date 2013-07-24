@@ -124,6 +124,7 @@ app.model = function() {
      *=================================================================================*/
     pub.setList = function(list) {
         console.log("model.setList()");
+
         var updateLocalStorage = true;
         // assume true unless we read list from local storage
         if (list) {
@@ -131,7 +132,7 @@ app.model = function() {
             emergencyContactList = list;
         } else {
             pub.read();
-
+		
             if (emergencyContactList) {
                 console.log("   Got list from local storage.");
                 updateLocalStorage = false;

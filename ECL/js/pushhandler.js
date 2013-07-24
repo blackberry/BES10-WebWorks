@@ -35,7 +35,8 @@ app.pushHandler = function() {
             appId : "ecl_webworks",
             invokeTargetId : "bb10.webworks.ecl.invoke.waa.push"
         };
-        blackberry.push.PushService.create(ops, pub.successCreatePushService, pub.failCreatePushService, pub.onSimChange, pub.onPushTransportReady);
+        if (blackberry.push)
+            blackberry.push.PushService.create(ops, pub.successCreatePushService, pub.failCreatePushService, pub.onSimChange, pub.onPushTransportReady);
     };
 
     /*=================================================================================
@@ -133,6 +134,7 @@ app.pushHandler = function() {
     pub.pushNotificationHandler = function(pushpayload) {
         console.log("pushHandler.pushNotificationHandler()");
 
+		// Convert raw text to text string and parse out...
         app.pushHandler.blobToTextString(pushpayload.data);
 
         // Send notification to hub that new list arrived.
@@ -146,20 +148,33 @@ app.pushHandler = function() {
     /*=================================================================================
      * Convert the Blob in the push payload to text.
      *=================================================================================*/
-    pub.blobToTextString = function(blob) {
+    pub.blobToTextString = function(myBlob) {
         console.log("pushHandler.blobToTextString");
         var reader = new FileReader();
-
         reader.onload = function(evt) {
-            // No errors, get the result and call the callback
-            app.model.setList(JSON.parse(evt.target.result));
+			// Check if already compressed...
+			if (evt.target.result.substring(0,4)=='[93,') {
+        		alert('Excellent, you\'ve received a compressed payload!  Uncompressing now...');
+            	var byteArr = JSON.parse(evt.target.result);
+            	my_lzma.decompress(byteArr, function(raw) {
+        			// No errors, parse the JSON into UI element
+            		app.model.setList(JSON.parse(raw));
+				}, function (percent) {
+            		/// Decompressing progress code goes here.
+            		document.getElementById('listContent').innerHTML = "Decompressing: " + (percent * 100) + "%";
+        		});				
+    		} else {
+			// No compression, just send it!
+    		app.model.setList(JSON.parse(evt.target.result));  
+    		}     
         };
-
+        reader.onabort = function(evt) {
+            alert("Abort converting Blob to string: " + evt.target.error);
+        };    
         reader.onerror = function(evt) {
             alert("Error converting Blob to string: " + evt.target.error);
-        };
-
-        reader.readAsText(blob, "UTF-8");
+        };     
+        reader.readAsText(myBlob,"UTF-8");
     };
 
     /*=================================================================================

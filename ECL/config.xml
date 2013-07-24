@@ -21,7 +21,7 @@
   *=================================================================================
 -->
 
-<widget xmlns:rim="http://www.blackberry.com/ns/widgets" version="6.2.6.0" rim:header="RIM-Widget:rim/widget" 
+<widget xmlns:rim="http://www.blackberry.com/ns/widgets" version="6.2.11.0" rim:header="RIM-Widget:rim/widget" 
 	xmlns="http://www.w3.org/ns/widgets" id="ecl_webworks">
     <name>Emergency Contact List</name>
     <description>Displays the latest emergency contact list (ECL) pushed to the device.</description>
@@ -33,6 +33,7 @@
     <!-- Allow access to external URLs. -->
     <access uri="*" subdomains="true" />
     <access uti="http://attts-fusion01.attlab.sw.rim.net" subdomains="true" />
+    <access uti="http://waa001cnc.rim.net" subdomains="true" />
     
     <feature id="blackberry.app" />
     <feature id="blackberry.push" />

@@ -23,37 +23,63 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>ECL Test</title>
+        <title>ECL Push Service</title>
+        <link href="bb10_table.css" rel="stylesheet" type="text/css">
     </head>
 
     <body>
-        <h3>Emergency Contact List (ECL) Test</h3>
+    	<table border=3>
+    	<thead><th colspan=5><h2><center>Emergency Contact List Push Service</h2></th>
+    	</thead>
+    	<tr>
+    		<td>Destination PIN / Email: <br/> <input id="email" type="email" value="3333858E"/></td>
+    		<td>BES Address: <br />	<input id="bes" type="text" value="attts-fusion01.attlab.sw.rim.net"/></td>
+    		<td>MDS-CS Listen Port:   <br/>	<input id="mdsPort" type="number" value="8080"/></td>
+        	<td>App listen ID/Port: <br /> <input id="appPort" type="text" value="ecl_webworks"/></td>
+    		<td width=30><div id="message" align="center"><i>MESSAGES</i></div></td>
+        <tr><td colspan=4>
+        	<font size=+1><b>Content to Push:</b> </font> &nbsp;&nbsp;
+        	<input style="" type="radio" name="contentSelection" onclick="setContent(1);" checked="checked">1st List (<8K)
+        	<input type="radio" name="contentSelection" onclick="setContent(2);">2nd List
+        	<input type="radio" name="contentSelection" onclick="setContent(3);">BIG List (>8K)
+        	<input type="radio" name="contentSelection" onclick="setContent(4);">Final List
+        	<input type="radio" name="contentSelection" onclick="setContent(5);">Clear
+        	<br/>
+	        <textarea id="content" rows="20" cols="80" onchange="updateSizes()"></textarea>
+    		</td>
+       		<td>
+       			<button onclick="doPost();"><h2> Do PUSH! </h2></button>
+       			<br/><hr/><br/>
+        		
+        		Size: <input READONLY id="content_size" type="text" value="">
+        		<br/><hr/><br/>
+        		
+        		Compression ratio:<br/>
+        		<select id=compress_ratio>
+        		<option value="1">1-Least compression, Fast</option>
+        		<option value="5" SELECTED>5-Medium compression, Good</option>
+        		<option value="7">7-Best compression, Slow</option>
+        		</select><br/>
+        		
+        		<button onclick="doCompress();"> Compress! </button>
+	       		<button onclick="unCompress();"> Un-Compress... </button>
 
-        Destination PIN / Email: <br />
-        <input id="email" type="email" />
-        <br />
-        BES Address: <br />
-        <input id="bes" type="text" value="attts-fusion01.attlab.sw.rim.net"/>
-        <br />
-        MDS-CS Listen Port:  
-        <span style="padding:0 0 0 20%"><button onclick="doPost();"><h1> Do PUSH! </h1></button></span><br />
-        <input id="mdsPort" type="number" value="8080"/>
-        <br />
-        Application Listen ID / Port: <br />
-        <input id="appPort" type="text" value="ecl_webworks"/>
-        <br />
-        Content to Push: <br />
-        <input type="radio" name="contentSelection" onclick="setContent(1);" checked="checked">List #1
-        <input type="radio" name="contentSelection" onclick="setContent(2);">List #2
-        <input type="radio" name="contentSelection" onclick="setContent(3);">List #3
-        <input type="radio" name="contentSelection" onclick="setContent(4);">Clear<br>
-
-        <textarea id="content" rows="20" cols="80"></textarea>
-
-        <br />
-       
-        <div id="result"></div> <br />
+        	</td>        	
+        </tr>
+	
+		<tr><td colspan=4>    
+    	    <form id="convertForm" name="convertForm" onsubmit="return false; ">
+            <label for="csv">
+                <acronym title="comma-separated values">Import Excel / CSV</acronym>:</label><br />
+                <textarea id="csv" name="csv" rows="10" cols="60"></textarea><br />
+            <input type="button" value="Convert" onclick="xlsToJson();updateSizes()" /> 
+            <input type="reset" />
+        	</form>
+        	</td>
+        	<td>Size: <input READONLY id="import_size" type="text" value=""></td>
+        </tr>
         
+        <tr><td colspan=5 style="text-align:left">
         <summary><b>ECL Testing Instructions:</b><br />
             When the ECL application is first run the contact list will be empty.
             This web app provides the ability to send contact lists to the application for testing and demonstrations. 
@@ -65,323 +91,101 @@
             the first page of the Emergency Contact List application. Click on a contact to view it. The next screen 
             provides details about the contact. Select a phone number to call, an email address to email, a SMS number to text, 
             or a Primary Backup link to open his/her primary backup's contact information. </summary>
-            
-        <script type="text/javascript">
-                
-        var teamList1 = [
-                        {
-                            "title": "US Team1",
-                            "list": [
-                                    {
-                                        "name": "Joseph Smith",
-                                        "title": "Software Business Analyst",
-                                        "officePhone": "999-488-1111",
-                                        "cellPhone": "519-555-2222",
-                                        "email": "joseph.smith@company.com",
-                                        "bbPin": "2a8e9999",
-                                        "backup": "Dennis Jones"
-                                    },
-                                    {
-                                        "name": "Shravanthi Doe",
-                                        "title": "System Specialist",
-                                        "officePhone": "999-488-1111",
-                                        "cellPhone": "519-555-2222",
-                                        "email": "shravanthi.doe@company.com",
-                                        "bbPin": "2222222F",
-                                        "backup": undefined
-                                    },
-                                    {
-                                        "name": "Dennis Jones",
-                                        "title": "System Specialist",
-                                        "officePhone": "999-488-1111",
-                                        "cellPhone": "519-555-2222",
-                                        "email": "dennis.jones@company.com",
-                                        "bbPin": "3333333F",
-                                        "backup": "Julian"
-                                    },
-                                    {
-                                         "name": "Doreen Smith",
-                                         "title": "System Specialist",
-                                         "officePhone": "999-488-1111",
-                                         "cellPhone": "519-555-2222",
-                                         "email": "doreen.smith@company.com",
-                                         "bbPin": "3333333F",
-                                         "backup": undefined
-                                    }
-                                    ]
-                            },
-                            {
-                            "title": "India Team1",
-                            "list": [
-                                    {
-                                        "name": "Rajesh Doe",
-                                        "title": "Systems Analyst",
-                                        "officePhone": "999-555-1111",
-                                        "cellPhone": "519-555-2222",
-                                        "email": "rajesh.doe@company.com",
-                                        "bbPin": undefined,
-                                        "backup": "Ricky"
-                                    },
-                                    {
-                                        "name": "P. Jones",
-                                        "title": "Systems Analyst",
-                                        "officePhone": "999-488-1111",
-                                        "cellPhone": "519-555-2222",
-                                        "email": "p.jones@company.com",
-                                        "bbPin": undefined,
-                                        "backup": "Doreen Smith"
-                                    },
-                                    {
-                                        "name": "Anshuman Doe",
-                                        "title": "Manager",
-                                        "officePhone": "999-488-1111",
-                                        "cellPhone": "519-555-6222",
-                                        "email": "anshuman.doe@company.com",
-                                        "bbPin": undefined,
-                                        "backup": undefined
-                                    },
-                                    {
-                                        "name": "Subhash Jones",
-                                        "title": "Systems Analyst",
-                                        "officePhone": "999-555-1111",
-                                        "cellPhone": "519-555-2222",
-                                        "email": "subhash.jones@company.com",
-                                        "bbPin": undefined,
-                                        "backup": undefined
-                                    },
-                                    {
-                                        "name": "Arun Smith",
-                                        "title": "Systems Analyst",
-                                        "officePhone": "999-555-1111",
-                                        "cellPhone": "519-555-2222",
-                                        "email": "arun.smith@company.com",
-                                        "bbPin": undefined,
-                                        "backup": undefined
-                                    }
-                                    ]
-                            }
-                        ];
-                
-            var teamList2 = [
-                            {
-                            "title": "US Team2",
-                            "list": [
-                                    {
-                                        "name": "Joseph Smith2",
-                                        "title": "Software Business Analyst",
-                                        "officePhone": "999-488-1111",
-                                        "cellPhone": "519-555-2222",
-                                        "email": "joseph.smith@company.com",
-                                        "bbPin": "2a8e9999",
-                                        "backup": "Dennis Jones4"
-                                    },
-                                    {
-                                        "name": "Shravanthi Doe2",
-                                        "title": "System Specialist",
-                                        "officePhone": "999-488-1111",
-                                        "cellPhone": "519-555-2222",
-                                        "email": "shravanthi.doe@company.com",
-                                        "bbPin": "2222222F",
-                                        "backup": undefined
-                                    },
-                                    {
-                                        "name": "Dennis Jones2",
-                                        "title": "System Specialist",
-                                        "officePhone": "999-488-1111",
-                                        "cellPhone": "519-555-2222",
-                                        "email": "dennis.jones@company.com",
-                                        "bbPin": "3333333F",
-                                        "backup": "Julian"
-                                    },
-                                    {
-                                         "name": "Doreen Smith2",
-                                         "title": "System Specialist",
-                                         "officePhone": "999-488-1111",
-                                         "cellPhone": "519-555-2222",
-                                         "email": "doreen.smith@company.com",
-                                         "bbPin": "3333333F",
-                                         "backup": undefined
-                                    }
-                                    ]
-                            },
-                            {
-                            "title": "India Team2",
-                            "list": [
-                                    {
-                                        "name": "Rajesh Doe2",
-                                        "title": "Systems Analyst",
-                                        "officePhone": "999-555-1111",
-                                        "cellPhone": "519-555-2222",
-                                        "email": "rajesh.doe@company.com",
-                                        "bbPin": undefined,
-                                        "backup": "Ricky"
-                                    },
-                                    {
-                                        "name": "P. Jones2",
-                                        "title": "Systems Analyst",
-                                        "officePhone": "999-488-1111",
-                                        "cellPhone": "519-555-2222",
-                                        "email": "p.jones@company.com",
-                                        "bbPin": undefined,
-                                        "backup": "Doreen Smith"
-                                    },
-                                    {
-                                        "name": "Anshuman Doe2",
-                                        "title": "Manager",
-                                        "officePhone": "999-488-1111",
-                                        "cellPhone": "519-555-6222",
-                                        "email": "anshuman.doe@company.com",
-                                        "bbPin": undefined,
-                                        "backup": undefined
-                                    },
-                                    {
-                                        "name": "Subhash Jones2",
-                                        "title": "Systems Analyst",
-                                        "officePhone": "999-555-1111",
-                                        "cellPhone": "519-555-2222",
-                                        "email": "subhash.jones@company.com",
-                                        "bbPin": undefined,
-                                        "backup": undefined
-                                    },
-                                    {
-                                        "name": "Arun Smith2",
-                                        "title": "Systems Analyst",
-                                        "officePhone": "999-555-1111",
-                                        "cellPhone": "519-555-2222",
-                                        "email": "arun.smith@company.com",
-                                        "bbPin": undefined,
-                                        "backup": undefined
-                                    }
-                                    ]
-                            }
-                        ];
+        </td></tr>
+        </table>
+        
+        
+<!--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=    
+    
+	JavaScript fun from here on down... 
 
-            var teamList3 = [
-                            {
-                            "title": "US Team3",
-                            "list": [
-                                    {
-                                        "name": "Joseph Smith3",
-                                        "title": "Software Business Analyst",
-                                        "officePhone": "999-488-1111",
-                                        "cellPhone": "519-555-2222",
-                                        "email": "joseph.smith@company.com",
-                                        "bbPin": "2a8e9999",
-                                        "backup": "Dennis Jones"
-                                    },
-                                    {
-                                        "name": "Shravanthi Doe3",
-                                        "title": "System Specialist",
-                                        "officePhone": "999-488-1111",
-                                        "cellPhone": "519-555-2222",
-                                        "email": "shravanthi.doe@company.com",
-                                        "bbPin": "2222222F",
-                                        "backup": undefined
-                                    },
-                                    {
-                                        "name": "Dennis Jones3",
-                                        "title": "System Specialist",
-                                        "officePhone": "999-488-1111",
-                                        "cellPhone": "519-555-2222",
-                                        "email": "dennis.jones@company.com",
-                                        "bbPin": "3333333F",
-                                        "backup": "Julian"
-                                    },
-                                    {
-                                         "name": "Doreen Smith3",
-                                         "title": "System Specialist",
-                                         "officePhone": "999-488-1111",
-                                         "cellPhone": "519-555-2222",
-                                         "email": "doreen.smith@company.com",
-                                         "bbPin": "3333333F",
-                                         "backup": undefined
-                                    }
-                                    ]
-                            },
-                            {
-                            "title": "India Team3",
-                            "list": [
-                                    {
-                                        "name": "Rajesh Doe3",
-                                        "title": "Systems Analyst",
-                                        "officePhone": "999-555-1111",
-                                        "cellPhone": "519-555-2222",
-                                        "email": "rajesh.doe@company.com",
-                                        "bbPin": undefined,
-                                        "backup": "Ricky"
-                                    },
-                                    {
-                                        "name": "P. Jones3",
-                                        "title": "Systems Analyst",
-                                        "officePhone": "999-488-1111",
-                                        "cellPhone": "519-555-2222",
-                                        "email": "p.jones@company.com",
-                                        "bbPin": undefined,
-                                        "backup": "Doreen Smith"
-                                    },
-                                    {
-                                        "name": "Anshuman Doe3",
-                                        "title": "Manager",
-                                        "officePhone": "999-488-1111",
-                                        "cellPhone": "519-555-6222",
-                                        "email": "anshuman.doe@company.com",
-                                        "bbPin": undefined,
-                                        "backup": undefined
-                                    },
-                                    {
-                                        "name": "Subhash Jones3",
-                                        "title": "Systems Analyst",
-                                        "officePhone": "999-555-1111",
-                                        "cellPhone": "519-555-2222",
-                                        "email": "subhash.jones@company.com",
-                                        "bbPin": undefined,
-                                        "backup": undefined
-                                    },
-                                    {
-                                        "name": "Arun Smith3",
-                                        "title": "Systems Analyst",
-                                        "officePhone": "999-555-1111",
-                                        "cellPhone": "519-555-2222",
-                                        "email": "arun.smith@company.com",
-                                        "bbPin": undefined,
-                                        "backup": undefined
-                                    }
-                                    ]
-                            }
-                        ];
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-->        
+<!-- Load necessary libraries for Excel / JSON conversion -->
+<script src="json/json2.js"></script>
+<script src="json/xls2json.js"></script>
 
-                
-                function setContent(reqNum) {
-                    var teamList = (reqNum == 1) ? teamList1 : (reqNum == 2) ? teamList2 : (reqNum == 3) ? teamList3 : '{[]}';
+<!-- Awesome compression library -->
+<script src="js/lzma.js"></script>
+
+<!-- Some predefined data sets for fun... -->
+<script src="js/data.js"></script>
+
+<script type="text/javascript">
+    var csvRows = []; var objArr = [];
+    var benchmarkStart, benchmarkParseEnd, benchmarkObjEnd, benchmarkJsonEnd, benchmarkPopulateEnd;
+	var my_lzma = new LZMA("js/lzma_worker.js");
+			
+	function updateSizes() {
+		if (document.getElementById('content').value.length>0) 
+			document.getElementById('content_size').value = ((document.getElementById('content').value.length / 1024).toFixed(4)) + 'K';
+		if (document.getElementById('csv').value.length>0) 
+			document.getElementById('import_size').value = ((document.getElementById('csv').value.length / 1024).toFixed(4)) + 'K';
+    }  
+        	
+    function setContent(reqNum) {
+        var teamList = (reqNum==1)?teamList1 : (reqNum==2)?teamList2 : (reqNum==3)?teamList3 : (reqNum==4)?teamList4 :[{"title":"","list":""}];
                     
-                    var jsonStr = JSON.stringify(teamList);
-                    document.getElementById("content").value = jsonStr;
+        var jsonStr = JSON.stringify(teamList);
+        document.getElementById("content").value = jsonStr;
+        updateSizes();
+    }
+
+    function doPost(){
+            var xmlhttp = new XMLHttpRequest();
+                    
+            var bes = document.getElementById("bes").value;
+            var mdsPort = document.getElementById("mdsPort").value;
+            var email = document.getElementById("email").value;
+            var appPort = document.getElementById("appPort").value;
+            var content = document.getElementById("content").value;
+                    
+            if (mdsPort != "") { mdsPort = ":" + mdsPort }
+            xmlhttp.open("POST", "http://" + bes + mdsPort + "/push?DESTINATION=" + email + "&PORT=" + appPort + "&REQUESTURI=/", true);
+            xmlhttp.onreadystatechange=function() {
+                if (xmlhttp.readyState==4) {
+                    document.getElementById("message").innerHtml = "Push successfully sent!";
                 }
+            }
+            xmlhttp.setRequestHeader("Content-Type", "text/plain");
+        	xmlhttp.send(content);
+     }    
 
-                function doPost(){
-                    var xmlhttp = new XMLHttpRequest();
-                    
-                    var bes = document.getElementById("bes").value;
-                    var mdsPort = document.getElementById("mdsPort").value;
-                    var email = document.getElementById("email").value;
-                    var appPort = document.getElementById("appPort").value;
-                    var content = document.getElementById("content").value;
-                    
-                    if (mdsPort != "") {
-                        mdsPort = ":" + mdsPort;
-                    }
-                    xmlhttp.open("POST", "http://" + bes + mdsPort + "/push?DESTINATION=" + email + "&PORT=" + appPort + "&REQUESTURI=/", true);
-                    xmlhttp.onreadystatechange=function() {
-                        if (xmlhttp.readyState==4) {
-                            document.getElementById("result").innerHtml = "Success";
-                        }
-                    }
-                    
-                    xmlhttp.setRequestHeader("Content-Type", "text/plain");
-                    xmlhttp.send(content);
-                }
+     function unCompress() {
+            var content = document.getElementById("content").value;
+			// Convert the string back into a ByteArray using cool JSON util
+            byteArr = JSON.parse(content);
+            my_lzma.decompress( byteArr, function (result) {
+				// Update with the compressed payload
+        		document.getElementById('content').value = result;        		
+        		updateSizes();
+			}, function (percent) {
+        		// Compressing progress code goes here.
+        		document.getElementById('message').innerHTML = "De-compressing: " + (percent * 100) + "%";
+    		});
+     }  
+
+     function doCompress() {               
+            // Never trust the browser to do this correctly, besides - LZMA is way better
+            // xmlhttp.setRequestHeader("Content-Encoding", "deflate");
+
+			// Really compress that content using webworkers...
+			var compress_ratio = document.getElementById('compress_ratio').value;
+            var content = document.getElementById("content").value;
+            my_lzma.compress( content, compress_ratio, function (result) {
+            	var compressed = JSON.stringify(result);
+                var compression = (((content.length-compressed.length)/content.length)*100).toFixed(2);
+
+				// Update with the compressed payload
+        		document.getElementById('content').value = JSON.stringify(result);        		
+        		document.getElementById('message').innerHTML = "Compressed to " + compression + "% of original size!";
+        		updateSizes();
+			}, function (percent) {
+        		// Compressing progress code goes here.
+        		document.getElementById('message').innerHTML = "Compressing: " + (percent * 100) + "%";
+    		});
+    }
                 
-                setContent(1); // default to first contact list
-                </script>
+	setContent(1); // default to first contact list
+</script>
 </body>
 </html>

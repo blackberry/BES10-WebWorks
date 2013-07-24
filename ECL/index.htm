@@ -32,8 +32,10 @@
         <script type="text/javascript" src="js/contactlist.js"></script>
         <script type="text/javascript" src="js/phonelist.js"></script>
         <script type="text/javascript" src="js/details.js"></script>
-        <script type="text/javascript" src="js/pushhandler.js"></script>
+        <script type="text/javascript" src="js/lzma.js"></script>
         <script type="text/javascript" src="js/utils.js"></script>
+        <script type="text/javascript" src="js/pushhandler.js"></script>
+
 
         <script type="text/javascript">
             function ready() {
@@ -60,7 +62,7 @@
                     }
                 });
 
-                // Initialize with dummy data on application launch.
+                // Initialize data on application launch.
                 app.model.setList();
                 app.model.registerListUpdateCallback(app.contactList.onListUpdate);
 
@@ -80,6 +82,9 @@
                 //console.log("load()");
                 document.addEventListener("webworksready", ready);
             }, false);
+            
+            // Add de-compression code
+			var my_lzma = new LZMA('js/lzma_worker.js');
         </script>
     </head>
     <body>

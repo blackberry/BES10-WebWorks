@@ -18,22 +18,42 @@
   * The ecl_test.htm is a small test application that can be used to send requests
   * to the enterprise server to push an emergency contact list to a device/phone.
   *=================================================================================
+
+To generate unique content:
+Paste this at http://www.json-generator.com/:
+=-=-=-=-=-=-=-=-=-=-=-=-=
+[
+    '{{repeat(5)}}',
+{ title: 'Team {{company}}', 
+  list: [
+    '{{repeat(10)}}',
+    {
+        name: '{{firstName}} {{surname}}',
+        title: '{{company}} of {{company}}',
+        officePhone: '+1 {{phone}}',
+        cellPhone: '+1 {{phone}}',
+        email: '{{email}}',
+        bbPin: 0'{{numeric(1000,9999)}}'A8F,
+        backup: '{{firstName}} {{surname}}'
+    }
+     ]
+    }
+]
 -->
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>ECL Push Service</title>
+        <title>ECL Push Service Example</title>
         <link href="bb10_table.css" rel="stylesheet" type="text/css">
     </head>
 
     <body>
     	<table border=3>
-    	<thead><th colspan=5><h2><center>Emergency Contact List Push Service</h2></th>
-    	</thead>
+    	<thead><th colspan=5><h2><center>Emergency Contact List - Push Service</center></h2></th></thead>
     	<tr>
     		<td>Destination PIN / Email: <br/> <input id="email" type="email" value="3333858E"/></td>
-    		<td>BES Address: <br />	<input id="bes" type="text" value="attts-fusion01.attlab.sw.rim.net"/></td>
+    		<td>BES Address: <br />	<input id="bes" type="text" size=40 value="attts-fusion01.attlab.sw.rim.net"/></td>
     		<td>MDS-CS Listen Port:   <br/>	<input id="mdsPort" type="number" value="8080"/></td>
         	<td>App listen ID/Port: <br /> <input id="appPort" type="text" value="ecl_webworks"/></td>
     		<td width=30><div id="message" align="center"><i>MESSAGES</i></div></td>
@@ -51,7 +71,7 @@
        			<button onclick="doPost();"><h2> Do PUSH! </h2></button>
        			<br/><hr/><br/>
         		
-        		Size: <input READONLY id="content_size" type="text" value="">
+        		Size: <input READONLY size=30 id="content_size" type="text" value="">
         		<br/><hr/><br/>
         		
         		Compression ratio:<br/>
@@ -116,10 +136,14 @@
 	var my_lzma = new LZMA("js/lzma_worker.js");
 			
 	function updateSizes() {
-		if (document.getElementById('content').value.length>0) 
-			document.getElementById('content_size').value = ((document.getElementById('content').value.length / 1024).toFixed(4)) + 'K';
-		if (document.getElementById('csv').value.length>0) 
-			document.getElementById('import_size').value = ((document.getElementById('csv').value.length / 1024).toFixed(4)) + 'K';
+		if (document.getElementById('content').value.length>0) {
+			// Calculate size of content box
+			//myBytes = Number(unescape(encodeURIComponent((document.getElementById('content').value)).length));
+			myBytes = Number(document.getElementById('content').value.length);
+			document.getElementById('content_size').value = myBytes.toLocaleString() + ' bytes ('+(myBytes/1024).toFixed(1)+'K)';
+		}
+		//if (document.getElementById('csv').value.length>0) 
+			//document.getElementById('import_size').value = ((document.getElementById('csv').value.length / 1024).toFixed(4)) + 'K';
     }  
         	
     function setContent(reqNum) {
@@ -129,6 +153,45 @@
         document.getElementById("content").value = jsonStr;
         updateSizes();
     }
+
+	if (!String.prototype.trim) {
+		String.prototype.trim = function () {
+			return this.replace(/^\s+|\s+$/, "");
+		}
+	}
+
+	function is_array(input) {
+		return typeof (input) === "object" && (input instanceof Array);
+	}
+
+	function convert2Bytes(hex_str) {
+		var count = 0, hex_arr, hex_data = [], hex_len, i;
+		if (hex_str.trim() == "") return [];
+		// Check for invalid hex characters.
+		if (/[^0-9a-fA-F\s]/.test(hex_str)) return false;
+		// Split on every 2 characters... pack it in tight!
+		hex_arr = hex_str.match(/.{2}/g);
+		hex_len = hex_arr.length;
+		for (i = 0; i < hex_len; ++i) {
+			if (hex_arr[i].trim() == "") continue;
+			hex_data[count++] = parseInt(hex_arr[i], 16);
+		}
+		return hex_data;
+	}
+
+	function convert2Hex(byte_arr) {
+		var hex_str = "", i, len, tmp_hex;
+		if (!is_array(byte_arr)) return false;
+		len = byte_arr.length;
+		for (i = 0; i < len; ++i) {
+			if (byte_arr[i] < 0) byte_arr[i] = byte_arr[i] + 256;
+			tmp_hex = byte_arr[i].toString(16);
+			// Add leading zero.
+			if (tmp_hex.length == 1) tmp_hex = "0" + tmp_hex;
+			hex_str += tmp_hex;
+		}
+		return hex_str.trim();
+	}
 
     function doPost(){
             var xmlhttp = new XMLHttpRequest();
@@ -146,14 +209,19 @@
                     document.getElementById("message").innerHtml = "Push successfully sent!";
                 }
             }
-            xmlhttp.setRequestHeader("Content-Type", "text/plain");
+            xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            // Never trust the browser to do this correctly, besides - LZMA is way better
+            //xmlhttp.setRequestHeader("Content-Encoding", "gzip");
         	xmlhttp.send(content);
      }    
 
      function unCompress() {
             var content = document.getElementById("content").value;
 			// Convert the string back into a ByteArray using cool JSON util
-            byteArr = JSON.parse(content);
+            //byteArr = JSON.parse(content);
+            
+            // Use more efficient HEX routines for storing ByteArray (convert2Bytes)
+            var byteArr = convert2Bytes(content);
             my_lzma.decompress( byteArr, function (result) {
 				// Update with the compressed payload
         		document.getElementById('content').value = result;        		
@@ -165,19 +233,18 @@
      }  
 
      function doCompress() {               
-            // Never trust the browser to do this correctly, besides - LZMA is way better
-            // xmlhttp.setRequestHeader("Content-Encoding", "deflate");
-
 			// Really compress that content using webworkers...
 			var compress_ratio = document.getElementById('compress_ratio').value;
             var content = document.getElementById("content").value;
             my_lzma.compress( content, compress_ratio, function (result) {
-            	var compressed = JSON.stringify(result);
+            	//var compressed = JSON.stringify(result);
+                // Use more efficient HEX routines for restoring ByteArray
+            	var compressed = convert2Hex(result);
                 var compression = (((content.length-compressed.length)/content.length)*100).toFixed(2);
 
 				// Update with the compressed payload
-        		document.getElementById('content').value = JSON.stringify(result);        		
-        		document.getElementById('message').innerHTML = "Compressed to " + compression + "% of original size!";
+        		document.getElementById('content').value = compressed;        		
+        		document.getElementById('message').innerHTML = "Compressed " + compression + "%!";
         		updateSizes();
 			}, function (percent) {
         		// Compressing progress code goes here.

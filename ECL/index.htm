@@ -85,6 +85,13 @@
             
             // Add de-compression code
 			var my_lzma = new LZMA('js/lzma_worker.js');
+			
+			// Make sure we can trim a string
+			if (!String.prototype.trim) {
+				String.prototype.trim = function () {
+				return this.replace(/^\s+|\s+$/, "");
+			}
+	}
         </script>
     </head>
     <body>

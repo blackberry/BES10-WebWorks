@@ -4,7 +4,7 @@ table {
   border: 1px solid #38160C;
   font: normal 11px verdana, arial, helvetica, sans-serif;
   color: #F6ECF0;
-  background: #322;
+  background: #211;
   }
 caption {
   text-align: left;
@@ -15,15 +15,19 @@ input {
   vertical-align:top
   }
 td, th {
-  border: 1px dashed #B85A7C;
+  border: 1px dashed #555;
   padding: .8em;
   color: #F6ECF0;
   }
 thead th, tfoot th {
   font: bold 11px verdana, arial, helvetica, sans-serif;
-  border: 1px solid #A85070;;
+  border: 1px solid #FFF;
   text-align: left;
-  background: #38160C;
+  background: #333;
+  background-image: url('WAA_panther.gif');
+  background-repeat: no-repeat;
+  background-size: 60px;
+  background-position: 10%;
   color: #F6ECF0;
   padding-top:6px;
   }
@@ -59,10 +63,10 @@ tfoot td {
 .odd {
   background: #7B2342;
   }
-tbody tr:hover {
-  background: #51152A;
+tbody td:hover {
+  background: #123;
   }
-tbody tr:hover th,
+tbody td:hover th,
 tbody tr.odd:hover th {
-  background: #51152A;
+  background: #123;
   }

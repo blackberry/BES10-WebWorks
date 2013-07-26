@@ -21,7 +21,7 @@
   *=================================================================================
 -->
 
-<widget xmlns:rim="http://www.blackberry.com/ns/widgets" version="6.2.11.0" rim:header="RIM-Widget:rim/widget" 
+<widget xmlns:rim="http://www.blackberry.com/ns/widgets" version="6.2.6.0" rim:header="RIM-Widget:rim/widget" 
 	xmlns="http://www.w3.org/ns/widgets" id="ecl_webworks">
     <name>Emergency Contact List</name>
     <description>Displays the latest emergency contact list (ECL) pushed to the device.</description>
@@ -63,8 +63,10 @@
     <rim:invoke-target id="bb10.webworks.ecl.invoke.waa.open">
         <type>APPLICATION</type>
         <filter>
+            <action>bb.action.VIEW</action>
             <action>bb.action.OPEN</action>
-            <mime-type>text/plain</mime-type>
+			<property var="uris" value="ecl://"/>
+            <mime-type>*</mime-type>
         </filter>
     </rim:invoke-target>
 </widget>

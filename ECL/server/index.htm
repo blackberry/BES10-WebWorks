@@ -19,9 +19,10 @@
   * to the enterprise server to push an emergency contact list to a device/phone.
   *=================================================================================
 
-To generate unique content:
+To generate unique ECL content: 
+(This example: 5 unique categories, with 10 contacts each)
 Paste this at http://www.json-generator.com/:
-=-=-=-=-=-=-=-=-=-=-=-=-=
+
 [
     '{{repeat(5)}}',
 { title: 'Team {{company}}', 
@@ -33,12 +34,13 @@ Paste this at http://www.json-generator.com/:
         officePhone: '+1 {{phone}}',
         cellPhone: '+1 {{phone}}',
         email: '{{email}}',
-        bbPin: 0'{{numeric(1000,9999)}}'A8F,
+        bbPin: '0{{numeric(1000,9999)}}A8F',
         backup: '{{firstName}} {{surname}}'
     }
      ]
     }
 ]
+
 -->
 <!DOCTYPE html>
 <html lang="en">

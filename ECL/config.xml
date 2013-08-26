@@ -21,7 +21,7 @@
   *=================================================================================
 -->
 
-<widget xmlns:rim="http://www.blackberry.com/ns/widgets" version="6.2.6.0" rim:header="RIM-Widget:rim/widget" 
+<widget xmlns:rim="http://www.blackberry.com/ns/widgets" version="6.3.2.0" rim:header="RIM-Widget:rim/widget" 
 	xmlns="http://www.w3.org/ns/widgets" id="ecl_webworks">
     <name>Emergency Contact List</name>
     <description>Displays the latest emergency contact list (ECL) pushed to the device.</description>
@@ -43,8 +43,12 @@
     <feature id="blackberry.invoke.card" />
     <feature id="blackberry.ui.contextmenu" />
 
+    <!-- Allow app to get the PIN of device -->
+	<feature id="blackberry.identity" />
+	
     <!-- Required permissions. -->
     <rim:permissions>
+	    <rim:permit>read_device_identifying_information</rim:permit> 
         <rim:permit>post_notification</rim:permit>
     </rim:permissions>
 

@@ -19,6 +19,19 @@
   * to the enterprise server to push an emergency contact list to a device/phone.
   *=================================================================================
 
+If you are running this locally as a file or on a server other than the BES, you may need 
+to enable XSS on your web-browser for the POST and response codes:
+
+IE:
+	Tools–>Internet Options->Security Tab->Custom Level->DISABLE XSS Filter 
+Firefox:
+    type "about:config" in url -> then set browser.urlbar.filter.javascript = false
+Chrome on a PC:
+	C:\Users\[your username goes here]\AppData\Local\Google\Chrome\Application\chrome.exe –args –disable-web-security
+Chrome on a Mac:
+	/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --disable-web-security
+	
+
 To generate unique content:
 Paste this at http://www.json-generator.com/:
 =-=-=-=-=-=-=-=-=-=-=-=-=
@@ -193,26 +206,79 @@ Paste this at http://www.json-generator.com/:
 		return hex_str.trim();
 	}
 
+	function createCORSRequest(method, url) {
+	  var xhr = new XMLHttpRequest();
+	  if ("withCredentials" in xhr) {
+	    // Check if the XMLHttpRequest object has a "withCredentials" property.
+	    // "withCredentials" only exists on XMLHTTPRequest2 objects.
+	    xhr.open(method, url, true);
+	  } else if (typeof XDomainRequest != "undefined") {
+	    // Otherwise, check if XDomainRequest.
+    	    // XDomainRequest only exists in IE, and is IE's way of making CORS requests.
+    	    xhr = new XDomainRequest();
+    	    xhr.open(method, url);
+ 	  } else {
+    	    // Otherwise, CORS is not supported by the browser.
+    	    xhr = null;
+  	  }
+  	  return xhr;
+	}
+
     function doPost(){
-            var xmlhttp = new XMLHttpRequest();
-                    
-            var bes = document.getElementById("bes").value;
-            var mdsPort = document.getElementById("mdsPort").value;
-            var email = document.getElementById("email").value;
-            var appPort = document.getElementById("appPort").value;
-            var content = document.getElementById("content").value;
-                    
-            if (mdsPort != "") { mdsPort = ":" + mdsPort }
-            xmlhttp.open("POST", "http://" + bes + mdsPort + "/push?DESTINATION=" + email + "&PORT=" + appPort + "&REQUESTURI=/", true);
-            xmlhttp.onreadystatechange=function() {
-                if (xmlhttp.readyState==4) {
-                    document.getElementById("message").innerHtml = "Push successfully sent!";
-                }
-            }
-            xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            // Never trust the browser to do this correctly, besides - LZMA is way better
-            //xmlhttp.setRequestHeader("Content-Encoding", "gzip");
-        	xmlhttp.send(content);
+        var xmlhttp = new XMLHttpRequest(); 
+        var bes = document.getElementById("bes").value;
+        var mdsPort = document.getElementById("mdsPort").value;
+        var email = document.getElementById("email").value;
+        var appPort = document.getElementById("appPort").value;
+        var content = document.getElementById("content").value;
+
+	    // BlackBerry Push response codes...
+	    var responseCodes = {
+		'0' : 'ERROR: The request did not make it to the BES server.\n\nIt is likely down for maintenance.  Please check with your IT support to ensure services on '+bes+' are running correctly and try your PUSH again.',
+		'200' : 'SUCCESS: The push request was sent and accepted by the BlackBerry MDS Connection Service.',
+		'400' : 'ERROR: A general error occurred.',
+		'403' : 'ERROR: The BlackBerry device is not associated with the BlackBerry Device Service, or push access control has been enabled on the BlackBerry Device Service and the server making the push request does not have permission to push data.',
+		'404' : 'ERROR: The push request was not received by the BlackBerry MDS Connection Service.\n\nVerify that you have supplied the correct URL and application ID passed in the port field for the BlackBerry MDS Connection Service in your push request.',
+		'413' : 'ERROR: Payload too large or over the server limit.  This results from your PUSH data being greater than the 8K limit.  You may reduce or COMPRESS your data and try again.',
+		'503' : 'ERROR: The BlackBerry MDS Connection Service is busy or is unable to manage the push request due to temporary overloading or server maintenance.\n\nBy default, the BlackBerry MDS Connection Service is configured to manage 1000 simultaneous push requests, including push requests that have previously been accepted and are pending delivery.' };
+
+        if (mdsPort != "") { mdsPort = ":" + mdsPort }
+  	    var url = "http://" + bes + mdsPort + "/push?DESTINATION=" + email + "&PORT=" + appPort + "&REQUESTURI=/";
+/*
+	    // Here's an example of using CORS for callback values, you need header support on
+	    // your server for this to work: 
+	    var xhr = createCORSRequest('POST', url);
+  	    if (!xhr) {
+    		alert('CORS not supported');
+    		return;
+  	    }
+  	    // Response handlers.
+  	    xhr.onload = function() {
+    	   	var text = xhr.responseText;
+		console.log('Status: '+xhr.status);
+		console.log(xmlhttp);
+		alert("BlackBerry Push Results\n=-=-=-=-=-=-=-=-=\n"+responseCodes[xhr.status]);
+		console.log('CORS response: '+text);
+  	    };
+  	    xhr.onerror = function() {
+    		alert('Couldn\'t find the server at:\n'+bes+':'+mdsPort+', please check the configuration settings and retry.');
+  	    };
+  	    xhr.send(content);
+	    console.log('Sent CORS');
+*/
+	    xmlhttp.open('POST', url, true);
+	    xmlhttp.onreadystatechange=function() {
+		    if (xmlhttp.readyState==4) {
+		    var error = (responseCodes[xmlhttp.status]) ? responseCodes[xmlhttp.status] : 'An unknown error has occurred:\n\n' + xmlhttp.responseText;
+			alert("BlackBerry Push Results\n=-=-=-=-=-=-=-=-=\n"+error);
+            //document.getElementById("message").innerHtml = "Push successfully sent!";
+        	}
+        }
+        
+    	xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        // Never trust the browser to do this correctly, besides - LZMA is way better
+        //xmlhttp.setRequestHeader("Content-Encoding", "gzip");
+        xmlhttp.send(content);
      }    
 
      function unCompress() {

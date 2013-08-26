@@ -3,7 +3,8 @@ BB10 Emergency Contact List
 
 ## Description
 
-NEW!!! Now has integrated compression routines. Compress your payload using LZMA and break
+* __NEW!__ Error messaging and return values from BES integrated into server push code (/server/)
+* __NEW!__ Now includes integrated compression routines. Compress your payload using LZMA and break
 past the 8K limit for your contacts!
 
 The Emergency Contact List (ECL) Application stores and displays the

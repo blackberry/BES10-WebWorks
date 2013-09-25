@@ -67,11 +67,9 @@
                 app.model.registerListUpdateCallback(app.contactList.onListUpdate);
 
                 // Display the home screen
-                console.log("bb.pushScreen(contactlist.htm)");
                 bb.pushScreen('contactlist.htm', 'contactList');
 
                 // Enable push listener/handler
-                //console.log('app.pushHandler');
                 app.pushHandler.createPushService();
 
                 // Add an event listener to handle incoming invokes

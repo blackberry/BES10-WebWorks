@@ -27,6 +27,11 @@ app.contactList = function() {'use strict';
 	pub.onDomReady = function() {
 		console.log('contactList.onDomReady()');
 		pub.populateContactList();
+
+		// Update the action bar for contactlist with the bbid (if available)
+		if (blackberry.identity) { 
+			document.getElementById('phoneinfo').innerHTML = '<b>PIN:</b> '+(blackberry.identity.uuid).substr(2).toUpperCase();
+		};
 	};
 
 	pub.onScreenReady = function() {

@@ -58,7 +58,7 @@ Paste this at http://www.json-generator.com/:
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>ECL Push Service Example</title>
+        <title>ECL Push Service</title>
         <link href="bb10_table.css" rel="stylesheet" type="text/css">
     </head>
 
@@ -73,10 +73,10 @@ Paste this at http://www.json-generator.com/:
     		<td width=30><div id="message" align="center"><i>MESSAGES</i></div></td>
         <tr><td colspan=4>
         	<font size=+1><b>Content to Push:</b> </font> &nbsp;&nbsp;
-        	<input style="" type="radio" name="contentSelection" onclick="setContent(1);" checked="checked">Small List (<8K)
+        	<input style="" type="radio" name="contentSelection" onclick="setContent(1);" checked="checked">Small List (&lt;8K)
         	<input type="radio" name="contentSelection" onclick="setContent(2);">Normal List
-        	<input type="radio" name="contentSelection" onclick="setContent(3);">BIG List (>8K)
-        	<input type="radio" name="contentSelection" onclick="setContent(4);">HUGE List (>32K)
+        	<input type="radio" name="contentSelection" onclick="setContent(3);">BIG List (&gt;8K)
+        	<input type="radio" name="contentSelection" onclick="setContent(4);">HUGE List (&gt;32K)
         	<input type="radio" name="contentSelection" onclick="setContent(5);">Clear
         	<br/>
 	        <textarea id="content" rows="20" cols="80" onchange="updateSizes()"></textarea>

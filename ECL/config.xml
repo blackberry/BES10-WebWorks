@@ -21,21 +21,29 @@
   *=================================================================================
 -->
 
-<widget xmlns:rim="http://www.blackberry.com/ns/widgets" version="6.3.2.0" rim:header="RIM-Widget:rim/widget" 
+<widget xmlns:rim="http://www.blackberry.com/ns/widgets" version="6.4.8.0" rim:header="RIM-Widget:rim/widget" 
 	xmlns="http://www.w3.org/ns/widgets" id="ecl_webworks">
     <name>Emergency Contact List</name>
-    <description>Displays the latest emergency contact list (ECL) pushed to the device.</description>
+    <description>Displays and syncs the latest Emergency Contact List (ECL) data pushed to the device.</description>
     <author rim:copyright="Copyright 2013 BlackBerry, unless otherwise noted." 
     	href="http://us.blackberry.com/developers/platform/pushapi.jsp">WAA Team - BlackBerry</author>
     <icon src="img/emergency.png" />
     <content src="index.htm" />
 
-    <!-- Allow access to external URLs. -->
-    <access uri="*" subdomains="true" />
-    <access uti="http://attts-fusion01.attlab.sw.rim.net" subdomains="true" />
-    <access uti="http://waa001cnc.rim.net" subdomains="true" />
+	<!-- Whitelist your BES / App server so you can open bi-directional communication -->
+    <access uri="https://attts-fusion01.attlab.sw.rim.net" subdomains="true" />
+    <access uri="http://attts-fusion01.attlab.sw.rim.net" subdomains="true" />
+
+	<!-- Here is my public dropbox, for pulling in external data (push/pull example) -->
+    <access uri="https://dl.dropboxusercontent.com/u/17100871/ECL" subdomains="true" />
+    <access uri="http://dl.dropboxusercontent.com/u/17100871/ECL" subdomains="true" />
     
-    <feature id="blackberry.app" />
+    <!-- Allow access to external URLs - probably want to remove this in production -->
+    <feature id="blackberry.app">
+    	<param name="websecurity" value="disable"></param>
+    </feature>
+    
+    <!-- Standard extensions for invoking and push and UI tweaks -->
     <feature id="blackberry.push" />
     <feature id="blackberry.system" />
     <feature id="blackberry.invoke"/>
@@ -46,6 +54,11 @@
     <!-- Allow app to get the PIN of device -->
 	<feature id="blackberry.identity" />
 	
+	<!-- Prefer a black background -->
+   	<feature id="blackberry.app">
+    		<param name="backgroundColor" value="0x00000000" />
+  	</feature>
+
     <!-- Required permissions. -->
     <rim:permissions>
 	    <rim:permit>read_device_identifying_information</rim:permit> 

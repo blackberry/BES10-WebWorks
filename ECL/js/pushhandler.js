@@ -31,7 +31,7 @@ app.pushHandler = function() {'use strict';
 		console.log("pushHandler.createPushService()");
 
 		var ops = {
-			appId : "ecl_webworks",
+			appId : 'ecl_webworks',
 			invokeTargetId : "bb10.webworks.ecl.invoke.waa.push"
 		};
 		if (blackberry.push)
@@ -159,6 +159,42 @@ app.pushHandler = function() {'use strict';
 		return hex_data;
 	};
 
+    // Mock routine for requesting the URL
+    pub.getPokePullUrl = function() {
+    	// Have a web service return the url based on your PIN
+    	// Example of an public appserver url to grab a BIG payload...
+    	var url = 'https://dl.dropboxusercontent.com/u/17100871/ECL/big_list.json';
+
+    	alert('Retrieving latest ECL data from: '+url+'\nfor ID: '+(blackberry.identity.uuid).substr(2).toUpperCase());
+    	app.pushHandler.getPokePull(url);
+    };
+    
+	// Poke and Pull Method
+	pub.getPokePull = function(url) {
+		// Make request
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.open("GET", url, true);
+		xmlhttp.onload = function() {
+			var jsonData = xmlhttp.responseText;
+			console.log('JSON received: ' + jsonData);
+			app.pushHandler.parseData(jsonData);
+		};
+		// Send PIN to request
+		xmlhttp.send(blackberry.identity.uuid);
+	};
+
+	// Check sanity and parse data...
+	pub.parseData = function(raw) {
+		console.log('Parsing... '+raw);
+		var myData = JSON.parse(raw);
+		// Make sure it's sane...
+		if (myData[0].title) {
+			app.model.setList(myData);
+		} else {
+			alert('The pushed content is not in a recognized format.  \n\nPlease try to re-send or contact your BES administrator.');
+		}
+	};
+
 	/*=================================================================================
 	 * Convert the Blob in the push payload to text.
 	 *=================================================================================*/
@@ -166,27 +202,30 @@ app.pushHandler = function() {'use strict';
 		console.log("pushHandler.blobToTextString");
 		var reader = new FileReader();
 		reader.onload = function(evt) {
+			console.log('Push received!');
+			// Check if HTTP poke/pull request incoming...
+			if (evt.target.result.substring(0, 4) == 'http') {
+				console.log('Ok, you are receiving a push url payload to go download.');
+				// Send the url to go grab data
+				app.pushHandler.getPokePull(evt.target.result);
 			// Check if compressed stream incoming...
-			if (evt.target.result.substring(0,4) == '5d00') {
+			} else if (evt.target.result.substring(0, 4) == '5d00') {
 				console.log('Excellent, you\'ve received a compressed payload!  Uncompressing now...');
 				var byteArr = app.pushHandler.convert2Bytes(evt.target.result);
 				my_lzma.decompress(byteArr, function(raw) {
 					// No errors, parse the JSON into UI element
-					app.model.setList(JSON.parse(raw));
+					app.pushHandler.parseData(raw);
 				}, function(percent) {
 					/// Decompressing progress code goes here.
 					document.getElementById('listContent').innerHTML = "Decompressing: " + (percent * 100) + "%";
 				});
 			} else {
-				var myData = JSON.parse(evt.target.result);
-				// No compression detected, make sure it's sane...
-				if (myData[0].title) {
-					app.model.setList(myData);
-				} else { 
-					alert('The pushed content is not in a recognized format.  \n\nPlease try to re-send or contact your BES administrator.');
-				}
+				// Just a raw JSON payload sent, go ahead and parse it...
+				console.log('Received standard JSON payload...');
+				app.pushHandler.parseData(evt.target.result);
 			}
 		};
+
 		reader.onabort = function(evt) {
 			alert("Abort converting incoming data: " + evt.target.error);
 		};
@@ -225,7 +264,7 @@ app.pushHandler = function() {'use strict';
 		var title = "Emergency Contact List";
 		var options = {
 			body : "New Emergency Contact List received",
-			target : "bb10.webworks.ecl.invoke.waa.open",
+			target : "bb10.webworks.ecl.invoke.waa.push",
 			targetAction : "bb.action.OPEN"
 		};
 		new Notification(title, options);
@@ -255,6 +294,6 @@ app.pushHandler = function() {'use strict';
 			}
 		}
 	};
-
 	return pub;
+	
 }();

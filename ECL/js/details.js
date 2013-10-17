@@ -127,7 +127,7 @@ app.details = function () {
             item.setAttribute('data-bb-type', 'item'); // Display as bbui.js
             item.setAttribute('data-bb-title', contact.cellPhone);
             item.setAttribute('data-bb-img', 'img/actionbar/chat2.png');
-            item.setAttribute('onclick', "alert('SMS Integration unsupported on the platform at this time.');");
+            item.setAttribute('onclick', "app.utils.textNumber('" + contact.cellPhone + "');");
             item.innerHTML = "SMS Cell";
             items.push(item);
         }
@@ -137,7 +137,7 @@ app.details = function () {
             item.setAttribute('data-bb-type', 'item'); // Display as bbui.js
             item.setAttribute('data-bb-title', contact.officePhone);
             item.setAttribute('data-bb-img', 'img/actionbar/chat2.png');
-            item.setAttribute('onclick', "alert('SMS integration is unsupported on the platform at this time.');");
+            item.setAttribute('onclick', "app.utils.textNumber('" + contact.officePhone + "');");
             item.innerHTML = "SMS Office";
             items.push(item);
         }

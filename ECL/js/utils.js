@@ -49,7 +49,17 @@ app.utils = function() {'use strict';
             app.utils.sendEmail(contact.email);
         }
     };
-
+    
+    /*=================================================================================
+     * Text a contact by phone number.
+     *=================================================================================*/
+    pub.textNumber = function(number) {
+        console.log("utils.textNumber()");
+        blackberry.invoke.invoke({
+            uri : 'sms: ' + number
+        }, pub.onInvokeSuccess, pub.onInvokeError);
+    };
+    
     /*=================================================================================
      * Call a contact by phone number.
      *=================================================================================*/

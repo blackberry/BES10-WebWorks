@@ -20,3 +20,17 @@
 
 app = {};
 
+function msg(text) {
+	if (document.getElementById('myMsg') == null) {
+		var msg = document.createElement('div');
+		msg.setAttribute('id', 'myMsg');
+		document.body.appendChild(msg);
+	}
+	var myMsg = document.getElementById('myMsg');
+	myMsg.innerHTML = text;
+	myMsg.style.cssText = 'display:inline;text-align:center;z-Index:1000;position:absolute;padding:10px;bottom:20px;left:10%;width:60%;height:50px;border:solid silver 2px;border-radius:15px;background:#000;font-size:15pt;color:white';
+}
+
+function msgHide() {
+	document.getElementById('myMsg').style.display = 'none';
+}

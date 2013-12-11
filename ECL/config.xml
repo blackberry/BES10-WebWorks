@@ -21,7 +21,7 @@
   *=================================================================================
 -->
 
-<widget xmlns:rim="http://www.blackberry.com/ns/widgets" version="6.4.8.0" rim:header="RIM-Widget:rim/widget" 
+<widget xmlns:rim="http://www.blackberry.com/ns/widgets" version="7.0.0.0" rim:header="RIM-Widget:rim/widget" 
 	xmlns="http://www.w3.org/ns/widgets" id="ecl_webworks">
     <name>Emergency Contact List</name>
     <description>Displays and syncs the latest Emergency Contact List (ECL) data pushed to the device.</description>

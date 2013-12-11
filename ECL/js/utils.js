@@ -32,7 +32,7 @@ app.utils = function() {'use strict';
         }, function(done) {
             console.log(done);
         }, function(cancel) {
-            console.log(cancel)
+            console.log(cancel);
         }, function(invokeError) {
             console.log(invokeError);
         });
@@ -69,15 +69,32 @@ app.utils = function() {'use strict';
             uri : 'tel: ' + number
         }, pub.onInvokeSuccess, pub.onInvokeError);
     };
+ /*
+ pub.alertOnSuccess = function(response) {
+     alert("response: " + JSON.stringify(response, null, 2));
+ };
 
+  pub.findAllPINTargets = function() {
+     var request = {
+             "uri": "pinto://",
+             "target_type": ["APPLICATION", "VIEWER"],
+             "action_type": "ALL"
+         };
+
+     blackberry.invoke.query(request, pub.alertOnSuccess, pub.onInvokeError);
+ };
+ */
     /*=================================================================================
      * PIN Message by ID.
      *=================================================================================*/
     pub.pinMessage = function(pin) {
-        console.log("utils.pinMessage()");
+        //alert("utils.pinMessage(" + pin + ")");
         blackberry.invoke.invoke({
-        	//target: "sys.browser",
-            uri : 'pin:' + pin
+            //action: "bb.action.COMPOSE",
+            //type: "application/vnd.blackberry.pin",
+            //target: "sys.browser",
+            //action: bb.action.OPEN,
+            uri: 'pinto:' + pin + '?subject=ECL Message&body=You have received this message in an emegency situation.'
         }, pub.onInvokeSuccess, pub.onInvokeError);
     };
 

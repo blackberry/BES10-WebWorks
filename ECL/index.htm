@@ -24,7 +24,11 @@
     <head>
         <title>Emergency Contact List</title>
         <link rel="stylesheet" type="text/css" href="css/bbui-min.css"/>
-
+		<style>
+			#myMsg {display:none;text-align:center;z-Index:1000;position:absolute;bottom:20px;left:10%;width:60%;height:50px;border:solid silver 2px;border-radius:15px;background:#000;font-size:13pt;color:white }
+    		#msgPic {display:none;background:#000;z-Index:1000;position:absolute;width:80%;max-height:70%;top:20%;left:10%;border:solid black 5px;border-radius:30px }
+    		#msgVideo {display:none;background:#000;z-Index:1000;position:absolute;width:80%;max-height:70%;top:20%;left:10%;border:solid black 5px;border-radius:30px }
+		</style>
         <script type="text/javascript" src="local:///chrome/webworks.js"></script>
         <script type="text/javascript" src="js/bbui-min.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
@@ -50,6 +54,7 @@
                         } else {
                             app.contactList.onOtherScreenReady();
                         }
+   
                     },
                     ondomready: function(element, id) {
                         if (id === "contactList") {
@@ -74,6 +79,17 @@
 
                 // Add an event listener to handle incoming invokes
                 blackberry.event.addEventListener("invoked", app.pushHandler.onInvoke);
+                                       
+                // Can't simply add these to body, BBUI does odd things...
+                var picture = document.createElement('img');
+                picture.setAttribute('id', 'msgPic');
+                document.body.appendChild(picture);
+                var video = document.createElement('video');
+                video.setAttribute('id', 'msgVideo');
+                document.body.appendChild(video);
+				var msg = document.createElement('div');
+				msg.setAttribute('id', 'myMsg');
+                document.body.appendChild(msg);
             };
 
             window.addEventListener("load", function(e) {
@@ -88,10 +104,10 @@
 			if (!String.prototype.trim) {
 				String.prototype.trim = function () {
 				return this.replace(/^\s+|\s+$/, "");
-			}
+			};
 	}
         </script>
     </head>
-    <body>
+    <body>  	
     </body>
 </html>

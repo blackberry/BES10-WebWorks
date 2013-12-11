@@ -29,6 +29,40 @@ and is beyond the scope of this document to set up.
 There is a blog @ http://devblog.blackberry.com that goes into this migration path in 
 greater detail.
 
+## Server Component
+
+The server/index.htm is a small test application that can be used to send requests
+to the enterprise server to push an emergency contact list to a device/phone.
+This is a standalone HTML file and can run directly from the BlackBerry filesystem,
+on a simple webserver (like Apache or Nginx), or packaged and deployed as a hybrid app
+itself on BlackBerry platforms.  It handles the Excel to JSON conversion.  It also now
+supports compression.  Go ahead and try compressing your data and choosing different compression
+values.  The client app handles both compressed or uncompressed data automatically.
+
+
+## Known Issues
+
+The context view can be difficult to expand in HTML5 apps. 
+It seems the user must long press menu for 2 seconds before swiping to
+the left.
+
+##  File Structure
+build.xml - ant build script
+config.xml - WebWorks project file.  Contains application parameters andpermissions.
+index.html - Top level application file that initializes WebWorks and loadsthe 1st screen (contactlist.htm).
+contactlist.htm - Skeleton markup of Emergency Contact List view
+phonelist.htm - Skeleton markup of contact phone list view
+details.htm - Skeleton markup of details view
+bbui-min.js, bbui-min.css -  bbUI VERSION: 0.9.6.1
+index.js - Top level Javascript file that defines app namespace.
+contactlist.js - Creates and manages the Emergency Contact List view.
+phonelist.js - Creates and manages the phone list view.
+details.js - Creates and manages the details view.
+eclmodel.js - Holds and saves the contact list.
+pushhandlers.js - Handles the push messages.
+utils.js - Utility functions.  
+img - Contains the application icon and icons used in the application.
+
 ## How to Build
 
 Please make sure you've set up your WebWorks setup to have the BB10 bbui Extension 
@@ -57,63 +91,9 @@ The build script in build.xml uses Ant, so that must be installed.
    $ ant
 
 
-##  File Structure
-
-build.xml - ant build script
-
-config.xml - WebWorks project file.  Contains application parameters and
-permissions.
-
-index.html - Top level application file that initializes WebWorks and loads
-the 1st screen (contactlist.htm).
-
-contactlist.htm - Skeleton markup of Emergency Contact List view
-
-phonelist.htm - Skeleton markup of contact phone list view
-
-details.htm - Skeleton markup of details view
-
-bbui-min.js, bbui-min.css -  bbUI VERSION: 0.9.6.1
-
-index.js - Top level Javascript file that defines app namespace.
-
-contactlist.js - Creates and manages the Emergency Contact List view.
-
-phonelist.js - Creates and manages the phone list view.
-
-details.js - Creates and manages the details view.
-
-eclmodel.js - Holds and saves the contact list.
-
-pushhandlers.js - Handles the push messages.
-
-utils.js - Utility functions.  
-
-img - Contains the application icon and icons used in the application.
-
-
-## Server Component
-
-The server/index.htm is a small test application that can be used to send requests
-to the enterprise server to push an emergency contact list to a device/phone.
-This is a standalone HTML file and can run directly from the BlackBerry filesystem,
-on a simple webserver (like Apache or Nginx), or packaged and deployed as a hybrid app
-itself on BlackBerry platforms.  It handles the Excel to JSON conversion.  It also now
-supports compression.  Go ahead and try compressing your data and choosing different compression
-values.  The client app handles both compressed or uncompressed data automatically.
-
-
-## Known Issues
-
-The context view can be difficult to expand in HTML5 apps. 
-It seems the user must long press menu for 2 seconds before swiping to
-the left.
-
-
 ## More Info
 
 The UI uses Webworks and BBUI.js
 The JS LZMA compression routines are by Nathan Rugg @ https://github.com/nmrugg/LZMA-JS
 The JSON parser in JavaScript by Douglas Crockford @ http://javascript.crockford.com
 Icons from Myers Design Limited (http://myersdesign.com/).
-

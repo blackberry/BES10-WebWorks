@@ -163,24 +163,82 @@ app.pushHandler = function() {'use strict';
     pub.getPokePullUrl = function() {
     	// Have a web service return the url based on your PIN
     	// Example of an public appserver url to grab a BIG payload...
-    	var url = 'https://dl.dropboxusercontent.com/u/17100871/ECL/big_list.json';
-
-    	alert('Retrieving latest ECL data from: '+url+'\nfor ID: '+(blackberry.identity.uuid).substr(2).toUpperCase());
-    	app.pushHandler.getPokePull(url);
+    	var url = [ 
+    		'https://dl.dropboxusercontent.com/u/17100871/ECL/big_list.json',
+    		'http://upload.wikimedia.org/wikipedia/commons/1/1a/Dszpics1.jpg',
+    		'http://www.pdrvirginia.com/wp-content/uploads/2013/10/Virginia-Tornado-Warning1.png',
+    		'http://techslides.com/demos/sample-videos/small.mp4'
+    	];
+		var i = Math.floor(Math.random() * url.length);
+    	//alert('Retrieving latest ECL data from: ('+i+')\n'+url[i]+'\n\tfor ID: '+(blackberry.identity.uuid).substr(2).toUpperCase());
+    	app.pushHandler.getPokePull(url[i]);
     };
     
 	// Poke and Pull Method
 	pub.getPokePull = function(url) {
-		// Make request
-		var xmlhttp = new XMLHttpRequest();
-		xmlhttp.open("GET", url, true);
-		xmlhttp.onload = function() {
-			var jsonData = xmlhttp.responseText;
-			console.log('JSON received: ' + jsonData);
-			app.pushHandler.parseData(jsonData);
+		var xhr = new XMLHttpRequest();
+		console.log('Getting url: '+url);
+		// Attempt to determine filetype from URL
+		if(url.lastIndexOf('png')!=-1 || url.lastIndexOf('jpg')!=-1) {
+			console.log('Getting pic!');
+			xhr.open('GET', url, true);
+			xhr.responseType = 'blob';
+			xhr.send();
+			xhr.onprogress = function(evt) {
+				if (evt.lengthComputable) 
+					msg('Loading: '+parseInt((evt.loaded / evt.total)*100));
+			};
+			xhr.onload = function() {
+				app.pushHandler.picAlert(this.response);
+			};
+		} else if(url.lastIndexOf('mp4')!=-1) {
+			console.log('Getting video!');
+			xhr.open('GET', url, true);
+			xhr.responseType = 'blob';
+			xhr.send();
+			xhr.onprogress = function(evt) {
+				if (evt.lengthComputable) 
+					msg('Loading: '+parseInt((evt.loaded / evt.total)*100));
+			};
+			xhr.onload = function() {
+				app.pushHandler.vidAlert(this.response);
+			};
+		} else {
+			console.log('Loading JSON');
+			// Make request
+			xhr.open("GET", url, true);
+			// Send PIN to app server in request
+			xhr.send(blackberry.identity.uuid);
+			xhr.onload = function() {		
+				// JSON payload
+				var jsonData = this.responseText;
+				console.log('JSON received: ' + jsonData);
+				app.pushHandler.parseData(jsonData);
+			};
 		};
-		// Send PIN to request
-		xmlhttp.send(blackberry.identity.uuid);
+	};
+
+	pub.picAlert = function(asset) {
+		console.log('Creating pic...');
+		//console.log(asset);
+		var pic = document.getElementById('msgPic');
+		pic.src = window.URL.createObjectURL(asset);
+		pic.style.display = 'inline';
+		pic.onclick = function() { pic.style.display = 'none'; };
+		console.log('Finished pic loading...');
+		setTimeout(msgHide, 2000);
+	};
+	
+	pub.vidAlert = function(asset) {
+		console.log('Creating video...');
+		var video = document.getElementById('msgVideo');
+		video.src = window.URL.createObjectURL(asset);
+		video.style.display = 'inline';
+		video.onclick = function() { video.style.display = 'none' };
+		console.log('Finished video loading...');
+		video.load();
+		video.play();
+		setTimeout(msgHide, 2000);
 	};
 
 	// Check sanity and parse data...
@@ -193,6 +251,7 @@ app.pushHandler = function() {'use strict';
 		} else {
 			alert('The pushed content is not in a recognized format.  \n\nPlease try to re-send or contact your BES administrator.');
 		}
+		setTimeout(msgHide, 2000);
 	};
 
 	/*=================================================================================
@@ -203,6 +262,7 @@ app.pushHandler = function() {'use strict';
 		var reader = new FileReader();
 		reader.onload = function(evt) {
 			console.log('Push received!');
+			
 			// Check if HTTP poke/pull request incoming...
 			if (evt.target.result.substring(0, 4) == 'http') {
 				console.log('Ok, you are receiving a push url payload to go download.');
@@ -217,7 +277,7 @@ app.pushHandler = function() {'use strict';
 					app.pushHandler.parseData(raw);
 				}, function(percent) {
 					/// Decompressing progress code goes here.
-					document.getElementById('listContent').innerHTML = "Decompressing: " + (percent * 100) + "%";
+					msg("Decompressing " + parseInt(percent * 100) + "%");
 				});
 			} else {
 				// Just a raw JSON payload sent, go ahead and parse it...

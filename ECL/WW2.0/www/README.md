@@ -48,20 +48,20 @@ It seems the user must long press menu for 2 seconds before swiping to
 the left.
 
 ##  File Structure
-  config.xml - WebWorks project file.  Contains application parameters andpermissions.
-  index.html - Top level application file that initializes WebWorks and loadsthe 1st screen (contactlist.htm).
-  contactlist.htm - Skeleton markup of Emergency Contact List view
-  phonelist.htm - Skeleton markup of contact phone list view
-  details.htm - Skeleton markup of details view
-  bbui-min.js, bbui-min.css -  bbUI VERSION: 0.9.6.1
-  index.js - Top level Javascript file that defines app namespace.
-  contactlist.js - Creates and manages the Emergency Contact List view.
-  phonelist.js - Creates and manages the phone list view.
-  details.js - Creates and manages the details view.
-  eclmodel.js - Holds and saves the contact list.
-  pushhandlers.js - Handles the push messages.
-  utils.js - Utility functions.  
-  img - Contains the application icon and icons used in the application.
+  * config.xml - WebWorks project file.  Contains application parameters andpermissions.
+  * index.html - Top level application file that initializes WebWorks and loadsthe 1st screen (contactlist.htm).
+  * contactlist.htm - Skeleton markup of Emergency Contact List view
+  * phonelist.htm - Skeleton markup of contact phone list view
+  * details.htm - Skeleton markup of details view
+  * bbui-min.js, bbui-min.css -  bbUI VERSION: 0.9.6.1
+  * index.js - Top level Javascript file that defines app namespace.
+  * contactlist.js - Creates and manages the Emergency Contact List view.
+  * phonelist.js - Creates and manages the phone list view.
+  * details.js - Creates and manages the details view.
+  * eclmodel.js - Holds and saves the contact list.
+  * pushhandlers.js - Handles the push messages.
+  * utils.js - Utility functions.  
+  * img - Contains the application icon and icons used in the application.
 
 ## How to Build
 

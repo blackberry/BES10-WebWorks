@@ -1,0 +1,176 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>PINCleanup</title>
+		<script type="text/javascript" src="local:///cordova.js"></script>
+	</head>
+
+	<body>
+		<script>
+			window.addEventListener("load", function(e) {
+				document.addEventListener("deviceready", ready);
+			}, false);
+
+			// Make global
+			var contacts, startTime;
+
+			function ready() {
+				// This isn't ready until WebWorks says so...
+				console.log('Ready!');
+				alert('Waiting to begin...');
+				contacts = blackberry.pim.contacts;
+				searchAllContacts();
+			}
+
+			//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+			// Contact finder
+			//=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+			function onFindSuccess(results) {
+				var output = document.getElementById('output');
+				output.innerHTML = "Parsing " + results.length + " contacts in total...<br/>";
+
+				var count = 0;
+				for ( i = 0; i < results.length; i++) {
+					// Check if IM data exists for user
+					if ( typeof results[i].ims !== 'undefined' && results[i].ims instanceof Array) {
+						// First check all IM fields for BBMPIN type
+						// if it already exists, leave contact alone!
+						var bbmFound = false;
+						for ( j = 0; j < results[i].ims.length; j++) {
+							//console.log(' IM: ',results[i].id, results[i].ims[j].type);
+							if (results[i].ims[j].type == 'BbmPin') {
+								bbmFound = true;
+								break;
+							}
+						}
+
+						// Check for other fields and fix if it looks like a BBM
+						// Now also does a sanity check on BBID (8chars/hex)
+						if (!bbmFound) {
+							for ( j = 0; j < results[i].ims.length; j++) {
+								if (results[i].ims[j].type == 'other' && results[i].ims[j].value.match(/^([0-9a-fA-F]{8})$/)) {
+									count++;
+									fixed = fixContact(results[i].id, results[i].ims[j].value);
+								}
+							}
+						}
+						console.log('Outside: count-' + count + ', i: ' + i);
+					}
+				}
+				if (count == 0)
+					output.innerHTML += "<br/>No inconsistencies found.";
+
+				// Show how long this took
+				var end = new Date().getTime();
+				var time = end - startTime;
+				output.innerHTML += "<br/><hr width=50%/>Took: " + time / 1000 + 'secs';
+			}
+
+			function fixContact(id, bbm) {
+				document.getElementById('output').innerHTML += '<br/>Fixing ID:' + id + ' (' + bbm + ')';
+				console.log('Fixing: ' + id, bbm);
+				var newContact = blackberry.pim.contacts.getContact(id);
+				var newIMS = newContact.ims;
+
+				// Remove ALL "other IM" contact with BBM field
+				for ( i = 0; i < newIMS.length; i++) {
+					if (newIMS[i].type == 'other' && newIMS[i].value.match(/^([0-9a-fA-F]{8})$/)) {
+						console.log('Removing ' + i);
+						newIMS.splice(i, 1);
+					}
+				}
+				// Add BBM contact
+				newIMS.push({
+					type : 'BbmPin', value : 'bbm'
+				});
+
+				// Override with new ims list...
+				newContact.ims = newIMS;
+
+				/* If creation succeeds, return happily */
+				var saveSuccess = newContact.save(function(contact) {
+					console.log('Contact (ID: ' + contact.id + ') successfully fixed.');
+					return true;
+				},
+				/* If there is an error, let the user know. */
+				function(error) {
+					console.log(error);
+					switch (error.code) {
+						case error.TIMEOUT_ERROR:
+							alert("Error: Timeout saving contact.");
+							break;
+						case error.PENDING_OPERATION_ERROR:
+							alert("Error: Waiting for pending operation saving contact.");
+							break;
+						case error.IO_ERROR:
+							alert("Error: IO Error saving contact.");
+							break;
+						case error.NOT_SUPPORTED_ERROR:
+							alert("Error: Not Supported errr saving contact.");
+							break;
+						case error.UNKNOWN_ERROR:
+							alert("Error: An unknown error occurred saving contact.");
+							break;
+						case error.INVALID_ARGUMENT_ERROR:
+							alert("Error: Invalid argument saving contact.");
+							break;
+						case error.PERMISSION_DENIED_ERROR:
+							alert("Error: Permission denied error saving contact.");
+							break;
+						default:
+							alert("Error: fixing BBM " + bbm + " contact, detail=" + error.message);
+					};
+					return false;
+				});
+				
+				// Spin and wait until contact save is complete before returning from loop...
+				
+			}
+
+			function onFindError(error) {
+				alert('Error searching:' + error.code);
+			}
+
+			function searchAllContacts() {
+				startTime = new Date().getTime();
+				var output = document.getElementById('output');
+				contacts.find(['id', 'name', 'ims'], {
+					limit : 10000
+				}, onFindSuccess, onFindError);
+			}
+
+		</script>
+
+		<style>
+			html {
+				background: #000;
+				color: #fff;
+				font-size: 30pt;
+			}
+			.container {
+				color: #FFF;
+				padding: 10px;
+				font-size: 30pt;
+				border-radius: 15pt;
+				background: #123;
+				border: solid white 5px
+			}
+		</style>
+		<div align="center">
+			<div class="container">
+				<div style="text-decoration:underline">
+					FIXING CONTACTS
+				</div>
+				<br/>
+				<div id="output">
+					<br/>
+					<br/>
+					Runs automatically...
+					<br/>
+				</div>
+			</div>
+		</div>
+
+	</body>
+</html>

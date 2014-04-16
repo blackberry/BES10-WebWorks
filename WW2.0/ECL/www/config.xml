@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * Copyright 2013 BlackBerry
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+-->
+
+<!--
+  *=================================================================================
+  * This xml sets the various configurations for the application. 
+  *=================================================================================
+-->
+<widget xmlns:rim="http://www.blackberry.com/ns/widgets" version="2.0.4" rim:header="RIM-Widget:rim/widget" 
+	xmlns="http://www.w3.org/ns/widgets" id="ecl_webworks2">
+    <name>Emergency Contact List</name>
+    <description>Displays and syncs the latest Emergency Contact List (ECL) data pushed to the device.</description>
+    <author rim:copyright="Copyright 2013 BlackBerry, unless otherwise noted." 
+    	href="http://us.blackberry.com/developers/platform/pushapi.jsp">WAA Team - BlackBerry</author>
+    <icon src="img/emergency-icon.png" />
+    <rim:splash src="img/emergency-icon.png" />
+
+    <content src="index.htm" />
+    <preference name="backgroundColor" value="0x000000" />
+    <preference name="fullscreen" value="true"/>
+  	<preference name="webviewbounce" value="true"/> 
+  	 
+    <!-- Whitelist your BES / App server so you can open bi-directional communication -->
+    <access origin="https://attts-fusion01.attlab.sw.rim.net" subdomains="true" />
+    <access origin="http://attts-fusion01.attlab.sw.rim.net" subdomains="true" />
+
+    <!-- Here is my public dropbox, for pulling in external data (push/pull example) -->
+    <access origin="https://dl.dropboxusercontent.com/u/17100871/ECL" subdomains="true" />
+    <access origin="http://dl.dropboxusercontent.com/u/17100871/ECL" subdomains="true" />
+ 
+    <!-- Allow access to external URLs - probably want to remove this in production -->
+    <preference name="websecurity" value="disable" />
+
+    <!-- Required permissions. -->
+    <rim:permissions>
+        <rim:permit>read_device_identifying_information</rim:permit> 
+        <rim:permit>post_notification</rim:permit>
+    </rim:permissions>
+
+    <!-- Need to put an invoke entry here for push -->
+    <!-- The id here must match the invokeTargetId passed in as one of the ops to blackberry.push.PushService.create -->
+    <rim:invoke-target id="bb10.webworks2.ecl.invoke.waa.push">
+        <type>APPLICATION</type>
+        <filter>
+            <action>bb.action.PUSH</action>
+            <mime-type>application/vnd.push</mime-type>
+        </filter>
+    </rim:invoke-target>
+
+    <!-- Have an invoke entry here for when a notification is clicked on in the BlackBerry Hub -->
+    <!-- This will cause the application to be opened -->
+    <rim:invoke-target id="bb10.webworks2.ecl.invoke.waa.open">
+        <type>APPLICATION</type>
+        <filter>
+            <action>bb.action.VIEW</action>
+            <action>bb.action.OPEN</action>
+	    <property var="uris" value="ecl://"/>
+            <mime-type>*</mime-type>
+        </filter>
+    </rim:invoke-target>
+</widget>

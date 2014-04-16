@@ -1,4 +1,4 @@
-# Invocation Sample App
+# WorkDrives Invocation Sample
 
 The WorkDrives Invocation Sample demonstrates how to invoke the WorkDrives application in the work perimeter, launching into either the Network Drives or the SharePoint Drives screen of the WorkDrives app.
 

@@ -73,14 +73,14 @@ img - Contains the application icon and icons used in the application.
 
 4. Make sure you have added all appropriate plugins in the plugin directory 
 (these are currently included in git, so you DON'T need to run these - I just have them here for reference)
-*webworks plugin add com.blackberry.push (this one is modified from the current default plugins)
-*webworks plugin add com.blackberry.system
-*webworks plugin add com.blackberry.invoke
-*webworks plugin add com.blackberry.invoked
-*webworks plugin add com.blackberry.invoke.card
-*webworks plugin add com.blackberry.ui.contextmenu
-*webworks plugin add com.blackberry.identity
-*webworks plugin add com.blackberry.notification	
+  * webworks plugin add com.blackberry.push (this one is modified from the current default plugins)
+  * webworks plugin add com.blackberry.system
+  * webworks plugin add com.blackberry.invoke
+  * webworks plugin add com.blackberry.invoked
+  * webworks plugin add com.blackberry.invoke.card
+  * webworks plugin add com.blackberry.ui.contextmenu
+  * webworks plugin add com.blackberry.identity
+  * webworks plugin add com.blackberry.notification	
 	
 5. Connect your device or simulator, type "webworks run"
 

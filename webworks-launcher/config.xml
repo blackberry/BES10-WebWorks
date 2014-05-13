@@ -2,7 +2,7 @@
   xmlns="http://www.w3.org/ns/widgets" 
   xmlns:cdv="http://cordova.apache.org/ns/1.0" 
   xmlns:rim="http://www.blackberry.com/ns/widgets" version="0.0.1">
-  <icon src="icon_weblauncher.png"/>
+  <icon src="img/logo.png"/>
   <author email="dreumer@blackberry.com" href="http://www.blackberry.com/">Dennis Reumer</author>
   <description>A simple weblauncher</description>
   <content src="index.html"/>

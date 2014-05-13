@@ -1,0 +1,1 @@
+{"prepare_queue":{"installed":[],"uninstalled":[]},"config_munge":{"www/config.xml":{"/widget":{"<feature name=\"com.blackberry.app\" value=\"com.blackberry.app\" />":1}}},"installed_plugins":{"com.blackberry.app":{"PACKAGE_NAME":"web-launcher-bb10"}},"dependent_plugins":{}}

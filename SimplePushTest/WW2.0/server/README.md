@@ -2,13 +2,15 @@
 
 This sample demonstrates how to implement Enterprise BlackBerry Push from the server. Note that any language can be used to build the server push. It is just an HTTP post to the BES. (ie. ASP, JSP, JavaScript, PHP, etc).
 
+## Screenshots ##
+
+![image](_screenshots/2.png)
+
 1. Copy the index.html file to a webserver.
 
 2. Open http://<your_server>/index.html in a web browser.
 
 3. Fill out the form items.
-
-	![image](_screenshots/2.png)
 
 	```
 	Email: The Email of the device you want to push to.

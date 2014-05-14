@@ -6,6 +6,8 @@ This sample demonstrates how to implement Enterprise BlackBerry Push from the se
 
 ![image](_screenshots/1.png)
 
+## How to Use
+
 1. Copy the index.html file to a webserver.
 
 2. Open http://<your_server>/index.html in a web browser.

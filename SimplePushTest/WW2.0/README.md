@@ -67,15 +67,18 @@ The primary client functionality is implemented in **pushClient.js** and **pushI
 
 8. Update the following files.
 
-	```
+
 	config.xml: You will need to modify the application ID and invoke-target ID to something unique; replace the @ symbols.
 
+	```
 		id="com.@@@@@@@@.pushclient"
 
 		id="com.@@@@@@@@.pushclient.invoke.push"
+	```
 
 	www/pushClient.js: Update the ops variable with your own client push credentials; replace the @ symbols. Note the invokeTargetId should match what you set the invoke-target ID as in the config.xml
 
+	```
 		'ops': {
 			'invokeTargetId': 'com.@@@@@@.pushclient.invoke.push',
 			'appId': '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'		//any string you like

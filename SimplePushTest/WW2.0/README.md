@@ -21,8 +21,7 @@ The primary client functionality is implemented in **pushClient.js** and **pushI
 
 ## Screenshots ##
 
-![image](_screenshots/1.png)&nbsp;
-![image](_screenshots/2.png)
+![image](_screenshots/1.png)
 
 ## Requirements ##
 

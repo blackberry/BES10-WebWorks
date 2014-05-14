@@ -8,6 +8,8 @@ This sample demonstrates how to implement Enterprise BlackBerry Push from the se
 
 3. Fill out the form items.
 
+	![image](_screenshots/2.png)
+
 	```
 	Email: The Email of the device you want to push to.
 

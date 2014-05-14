@@ -106,7 +106,7 @@ The primary client functionality is implemented in **pushClient.js** and **pushI
 	Once the App builds and deploys successfully you should see "Successfully created Push Channel" on the screen
 	```
 
-12. See the [Server](SimplePushTest/WW2.0/server) doc to push content.
+12. See the [Server](server) doc to push content.
 
 ## More Info
 

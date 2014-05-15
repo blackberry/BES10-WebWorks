@@ -62,6 +62,7 @@ The primary client functionality is implemented in **pushClient.js** and **pushI
 	```
 	webworks plugin add com.blackberry.invoked
 	webworks plugin add com.blackberry.push
+	webworks plugin add com.blackberry.app
 	```
 
 8. Update the following files.

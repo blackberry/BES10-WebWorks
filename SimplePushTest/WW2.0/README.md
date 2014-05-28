@@ -85,7 +85,7 @@ The primary client functionality is implemented in **pushClient.js** and **pushI
 		},
 	```
 
-9.  **NOTE**: As of WW2.1 this step is no longer required.
+9.  **NOTE: As of WW2.1 this step is no longer required.**
 	Update the com.blackberry.push plugin.
 
 	```

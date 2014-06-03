@@ -1,0 +1,16 @@
+<widget id="com.bb-samples.dreumer.ldapsearch" 
+        version="0.0.1" 
+        xmlns="http://www.w3.org/ns/widgets" 
+        xmlns:cdv="http://cordova.apache.org/ns/1.0"
+        xmlns:rim="http://www.blackberry.com/ns/widgets">
+    <name>Ldap Search</name>
+    <description>
+        A sample ldap search application talking to an LDAP search Web API hosted on a NodeJS server
+    </description>
+    <author email="dreumer@blackbery.com" 
+            href="http://www.blackberry.com">Dennis Reumer</author>
+    <icon src="icon_114x114.png" />
+    <content src="index.html" />
+    <access origin="*" />
+    <preference name="websecurity" value="disable" />
+</widget>

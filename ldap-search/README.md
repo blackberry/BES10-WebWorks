@@ -1,5 +1,5 @@
-LDAP Search through a NodeJS MiddleWare server
-==============================================
+LDAP Search through a NodeJS server
+===================================
 
 This is a little sample code that has 2 parts:
 
@@ -47,11 +47,11 @@ Create your configuration
 
 Run NodeJS server
 
-1. code to the directory where the index.js file is listed
+1. Open a command line/terminal and navigate to the directory where the index.js file is listed
 
-2. enter [node index.js] to start the server
+2. Enter [node index.js] to start the server
 
-3. Check if the server is live by going to [http://localhost:<yourport>/?<seaarch parameter>] (yourport, e.g. 8888, search parameter, e.g. Dennis)
+3. Check if the server is live by going to [http://localhost:<yourport>/?<search parameter>] (yourport, e.g. 8888, search parameter, e.g. Dennis)
 
 
 ## Build the Cordova project.
@@ -74,12 +74,9 @@ Run NodeJS server
 
 7. Open the home.html file in the www directory and edit the nodejs server variable "nodeJS_server" to match the host url or IP address (e.g. "http://mynodejsserver.test:8888/")
 
-
 8. To deploy and run you can use: "cordova run client" from the root of your cordova project. For a BB10 deployment ensure the device is in development mode.
 
 9. To test in the work perimeter over the BES MDS-CS connection, ensure the BB10 device is in development mode and has been activatd against a BES10 server. Switch to Work on teh device (Swipe down for settings, switch to Work) and use the deploy command again "cordova run client"
-
-
 
 
 

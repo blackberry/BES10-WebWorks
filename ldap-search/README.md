@@ -9,7 +9,7 @@ The BlackBerry 10 Cordova project that leverages this WEB API to present the sea
 
 **Applies To**
 
-* Client: [Cordova 3.3 or higher] e.g. WebWorks: (http://developer.blackberry.com/html5/) or Cordova (http://cordova.apache.org/)
+* Client: [Cordova 3.3 or higher](http://cordova.apache.org/) or [WebWorks 2.0 or higher](http://developer.blackberry.com/html5/)
 * Server: [NodeJS](http://nodejes.org), HTML5, CSS3 and JavaScript
 
 **Author(s)**
@@ -34,16 +34,19 @@ Create your configuration
 1. [Open the nodejs\server\ldap\client.js] file
 
 2. Set your own parameters:
+    ...
     const ldap_url = '<ldap(s)://<your server address>' // Your Active Directory LDAP server
     const binduser = 'cn=<user cd name>,cn=<from sub>,dc=<your domain>,dc=<your domain extension>'; // Your Active Directory Bind users (e.g. generic search account)
     const bindpw = '<bind password>'; // Active Directory Bind password 
     const ldap_basedn = 'CN=<e.g. Users>,DC=<your domain>,DC=<your domain extension>';
     const ldap_attributes = ['cn','givenName','sn','name','mobile','homePhone','mail']; // We onyl want these attributes to be found
     const ldap_class = '(objectClass=person)'; // set the search class to persons
+    ...
 
 3. If needed adjust the listening port in the server.js
+    ...
     http.createServer(onRequest).listen(<yourport>); 
-
+    ...
 
 Run NodeJS server
 
@@ -67,10 +70,13 @@ Run NodeJS server
 5. Copy over the files from the "ldap-search-cordova" directory to your new project directory (e.g. "ldapsearch") replace any existing files
 
 6. Edit the existing config.xml from your root directoy of you new project, use teh following information:
+        ...
 	* Change id="...." to your own package name (e.g. "com.acme.corova.ldapsearch")
 	* Change Author email, href and label to your own <author...>...</author>to yourown description
 	* Optional: Change App Name <name>...</name> to your own app name (e.g. "Ldap Search")
 	* Optional: Change the desription to your own description <description>...</description>
+        ...
+
 
 7. Open the home.html file in the www directory and edit the nodejs server variable "nodeJS_server" to match the host url or IP address (e.g. "http://mynodejsserver.test:8888/")
 

@@ -9,7 +9,7 @@ The BlackBerry 10 Cordova project that leverages this WEB API to present the sea
 
 **Applies To**
 
-* Client: [Cordova 3.3 or higher](http://developer.blackberry.com/html5/)
+* Client: [Cordova 3.3 or higher] e.g. WebWorks: (http://developer.blackberry.com/html5/) or Cordova (http://cordova.apache.org/)
 * Server: [NodeJS](http://nodejes.org), HTML5, CSS3 and JavaScript
 
 **Author(s)**

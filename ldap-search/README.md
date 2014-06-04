@@ -70,12 +70,12 @@ Run NodeJS server
 5. Copy over the files from the "ldap-search-cordova" directory to your new project directory (e.g. "ldapsearch") replace any existing files
 
 6. Edit the existing config.xml from your root directoy of you new project, use teh following information:
-        ```
-	Change id="...." to your own package name (e.g. "com.acme.corova.ldapsearch")
-	Change Author email, href and label to your own <author...>...</author>to yourown description
-	Optional: Change App Name <name>...</name> to your own app name (e.g. "Ldap Search")
-	Optional: Change the desription to your own description <description>...</description>
-        ```
+    ```
+    Change id="...." to your own package name (e.g. "com.acme.corova.ldapsearch")
+    Change Author email, href and label to your own <author...>...</author>to yourown description
+    Optional: Change App Name <name>...</name> to your own app name (e.g. "Ldap Search")
+    Optional: Change the desription to your own description <description>...</description>
+    ```
 
 
 7. Open the home.html file in the www directory and edit the nodejs server variable "nodeJS_server" to match the host url or IP address (e.g. "http://mynodejsserver.test:8888/")

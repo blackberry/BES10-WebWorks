@@ -48,7 +48,7 @@ It seems the user must long press menu for 2 seconds before swiping to
 the left.
 
 ##  File Structure
-  * config.xml - WebWorks project file.  Contains application parameters andpermissions.
+  * config.xml - WebWorks project file.  Contains application parameters and permissions.
   * index.html - Top level application file that initializes WebWorks and loadsthe 1st screen (contactlist.htm).
   * contactlist.htm - Skeleton markup of Emergency Contact List view
   * phonelist.htm - Skeleton markup of contact phone list view
@@ -65,15 +65,19 @@ the left.
 
 ## How to Build
 
-1. Ensure WebWorks 2.0 gold+ is installed
+1. Ensure WebWorks 2.1 or greater is installed
 
 2. Ensure signing keys are set up.
 
-3. Change to the root directory (the WW2.0), and run "webworks create ECL" - this will create the rest of the necessary files.
+3. Change to the root directory of the project (eg., ~/BES10-WebWorks/ECL/WW2.0/), and run "webworks create ECL" - this will create the rest of the necessary platform files.  You may then delete the directory it creates "ECL"
 
-4. Make sure you have added all appropriate plugins in the plugin directory 
-(these are currently included in git, so you DON'T need to run these - I just have them here for reference)
-  * webworks plugin add com.blackberry.push (this one is modified from the current default plugins)
+4. Make sure you have added all appropriate plugins in the plugin directory, I have included a node script to do this for you automatically (anywhere inside the project directory):
+ * node update_plugins.js
+
+OR manually: 
+  * webworks plugin add com.blackberry.push 
+  * webworks plugin add com.blackberry.app 
+  * webworks plugin add com.blackberry.utils 
   * webworks plugin add com.blackberry.system
   * webworks plugin add com.blackberry.invoke
   * webworks plugin add com.blackberry.invoked
@@ -81,12 +85,17 @@ the left.
   * webworks plugin add com.blackberry.ui.contextmenu
   * webworks plugin add com.blackberry.identity
   * webworks plugin add com.blackberry.notification	
-	
-5. Connect your device or simulator, type "webworks run"
+
+** NOTE VERY IMPORTANT TO DO THE NEXT STEP for PUSH to WORK!
+5. Update the www/config.xml on ~ line 24 -> "widget id" to be your desired app id (change from ecl_webworks_2)
+Then modify the two "rim:invoke-target" lines 55 & 65 to be unique (from webworks2.ecl2.invoke.waa.*)
+Then lastly modify the "push" value in www/js/pushhandler.js ~ line 23 to have the pushTarget identical to what you just defined in line 55 of config.xml.
+
+6. Connect your device or simulator, type "webworks run".  
+HINT: If your BES admin has enabled it, you may switch your device into the work perimeter and sign/deploy it directly there by typing  "webworks run --release -k SIGNING_PASSWORD"
 
 ## More Info
 
-The UI uses Webworks and BBUI.js
 The JS LZMA compression routines are by Nathan Rugg @ https://github.com/nmrugg/LZMA-JS
 The JSON parser in JavaScript by Douglas Crockford @ http://javascript.crockford.com
-Icons from Myers Design Limited (http://myersdesign.com/).
+The UI uses Webworks and BBUI.js

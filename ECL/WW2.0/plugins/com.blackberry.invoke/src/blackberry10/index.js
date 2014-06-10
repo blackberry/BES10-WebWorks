@@ -54,7 +54,7 @@ module.exports = {
         // if request contains invalid args, the invocation framework will provide error in callback
         // no validation done here
         var result = new PluginResult(args, env),
-            request = JSON.parse(decodeURIComponent(args["request"])),
+            request = JSON.parse(decodeURIComponent(args.request)),
             callback = function (error) {
                 if (error) {
                     result.callbackError(error, false);
@@ -69,7 +69,7 @@ module.exports = {
 
     query: function (success, fail, args, env) {
         var result = new PluginResult(args, env),
-            request = JSON.parse(decodeURIComponent(args["request"])),
+            request = JSON.parse(decodeURIComponent(args.request)),
             callback = function (error, response) {
                 if (error) {
                     result.callbackError(error, false);
@@ -79,20 +79,20 @@ module.exports = {
             },
             invocation = window.qnx.webplatform.getApplication().invocation;
 
-        if (request["target_type"] && Array.isArray(request["target_type"])) {
+        if (request.target_type && Array.isArray(request.target_type)) {
 
-            request["target_type"] = request["target_type"].filter(function (element) {
+            request.target_type = request.target_type.filter(function (element) {
                 var result = false;
                 switch (element)
                 {
                 case "APPLICATION":
-                    request["target_type_mask"] |= invocation.TARGET_TYPE_MASK_APPLICATION;
+                    request.target_type_mask |= invocation.TARGET_TYPE_MASK_APPLICATION;
                     break;
                 case "CARD":
-                    request["target_type_mask"] |= invocation.TARGET_TYPE_MASK_CARD;
+                    request.target_type_mask |= invocation.TARGET_TYPE_MASK_CARD;
                     break;
                 case "VIEWER":
-                    request["target_type_mask"] |= invocation.TARGET_TYPE_MASK_VIEWER;
+                    request.target_type_mask |= invocation.TARGET_TYPE_MASK_VIEWER;
                     break;
                 default:
                     result = true;
@@ -101,8 +101,8 @@ module.exports = {
                 return result;
             });
 
-            if (request["target_type"].length === 0) {
-                delete request["target_type"];
+            if (request.target_type.length === 0) {
+                delete request.target_type;
             }
         }
 

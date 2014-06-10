@@ -30,7 +30,7 @@ function trigger(result, type, arg) {
 
 module.exports = {
     invokeMediaPlayer: function (success, fail, args, env) {
-        var options = JSON.parse(decodeURIComponent(args["options"])),
+        var options = JSON.parse(decodeURIComponent(args.options)),
             result = new PluginResult(args, env),
             done = function (data) {
                 trigger(result, "done", data);
@@ -47,7 +47,7 @@ module.exports = {
     },
 
     invokeCamera: function (success, fail, args, env) {
-        var mode = JSON.parse(decodeURIComponent(args["mode"])),
+        var mode = JSON.parse(decodeURIComponent(args.mode)),
             result = new PluginResult(args, env),
             done = function (path) {
                 trigger(result, "done", path);
@@ -66,7 +66,7 @@ module.exports = {
     },
 
     invokeFilePicker: function (success, fail, args, env) {
-        var options = JSON.parse(decodeURIComponent(args["options"])),
+        var options = JSON.parse(decodeURIComponent(args.options)),
             result = new PluginResult(args, env),
             done = function (path) {
                 trigger(result, "done", path);
@@ -83,7 +83,7 @@ module.exports = {
     },
 
     invokeIcsViewer: function (success, fail, args, env) {
-        var options = JSON.parse(decodeURIComponent(args["options"])),
+        var options = JSON.parse(decodeURIComponent(args.options)),
             result = new PluginResult(args, env),
             done = function (path) {
                 trigger(result, "done", path);
@@ -101,7 +101,7 @@ module.exports = {
 
 
     invokeCalendarPicker: function (success, fail, args, env) {
-        var options = JSON.parse(decodeURIComponent(args["options"])),
+        var options = JSON.parse(decodeURIComponent(args.options)),
             result = new PluginResult(args, env),
             done = function (file) {
                 trigger(result, "done", file);
@@ -118,7 +118,7 @@ module.exports = {
     },
 
     invokeCalendarComposer: function (success, fail, args, env) {
-        var options = JSON.parse(decodeURIComponent(args["options"])),
+        var options = JSON.parse(decodeURIComponent(args.options)),
             result = new PluginResult(args, env),
             done = function (data) {
                 trigger(result, "done", data);
@@ -135,7 +135,7 @@ module.exports = {
     },
 
     invokeEmailComposer: function (success, fail, args, env) {
-        var options = JSON.parse(decodeURIComponent(args["options"])),
+        var options = JSON.parse(decodeURIComponent(args.options)),
             result = new PluginResult(args, env),
             done = function (data) {
                 trigger(result, "done", data);
@@ -175,23 +175,23 @@ module.exports = {
 
         // Pulled from the query code, we should probably keep a consistent API
         // allows the developers to define APPLICATION, VIEWER etc in an array
-        if (request["target_type"] && Array.isArray(request["target_type"])) {
+        if (request.target_type && Array.isArray(request.target_type)) {
 
-            request["target_type"] = request["target_type"].filter(function (element) {
+            request.target_type = request.target_type.filter(function (element) {
                 var result = false;
                 switch (element)
                 {
                 case "APPLICATION":
-                    request["target_type_mask"] |= invocation.TARGET_TYPE_MASK_APPLICATION;
+                    request.target_type_mask |= invocation.TARGET_TYPE_MASK_APPLICATION;
                     break;
                 case "CARD":
-                    request["target_type_mask"] |= invocation.TARGET_TYPE_MASK_CARD;
+                    request.target_type_mask |= invocation.TARGET_TYPE_MASK_CARD;
                     break;
                 case "VIEWER":
-                    request["target_type_mask"] |= invocation.TARGET_TYPE_MASK_VIEWER;
+                    request.target_type_mask |= invocation.TARGET_TYPE_MASK_VIEWER;
                     break;
                 case "SERVICE":
-                    request["target_type_mask"] |= invocation.TARGET_TYPE_MASK_SERVICE;
+                    request.target_type_mask |= invocation.TARGET_TYPE_MASK_SERVICE;
                     break;
 
                 default:
@@ -201,7 +201,7 @@ module.exports = {
                 return result;
             });
 
-            delete request["target_type"];
+            delete request.target_type;
         }
 
         if (request.hasOwnProperty('metadata')) {

@@ -24,11 +24,10 @@
     <description>BlackBerry 10 Identity APIs</description>
     <license>Apache 2.0</license>
 
-    <js-module src="www/client.js">
-        <clobbers target="blackberry.identity" />
-    </js-module>
-
     <platform name="blackberry10">
+        <js-module src="www/client.js">
+            <clobbers target="blackberry.identity" />
+        </js-module>
         <config-file target="www/config.xml" parent="/widget/rim:permissions">
             <rim:permit>read_device_identifying_information</rim:permit>
         </config-file>

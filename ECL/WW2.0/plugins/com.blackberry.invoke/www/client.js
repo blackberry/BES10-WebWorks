@@ -63,13 +63,13 @@ _self.invoke = function (request, onSuccess, onError) {
             return;
         }
     } else {
-        if (request["data"]) {
-            data = request["data"];
+        if (request.data) {
+            data = request.data;
 
             try {
                 // calling window.btoa on a string that contains unicode character will cause error
                 // it is the caller's responsibility to convert the string prior to calling invoke
-                request["data"] = _btoa(data);
+                request.data = _btoa(data);
             } catch (e) {
                 if (onError && typeof onError === "function") {
                     onError(e);

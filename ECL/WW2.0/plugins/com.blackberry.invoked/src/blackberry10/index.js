@@ -59,7 +59,7 @@ module.exports = {
             result = new PluginResult(args, env);
 
         try {
-            cardPeek = decodeURIComponent(args["peekType"]);
+            cardPeek = decodeURIComponent(args.peekType);
             window.qnx.webplatform.getApplication().invocation.cardPeek(cardPeek);
             result.noResult(true);
         } catch (e) {
@@ -72,7 +72,7 @@ module.exports = {
             result = new PluginResult(args, env);
 
         try {
-            request = JSON.parse(decodeURIComponent(args["request"]));
+            request = JSON.parse(decodeURIComponent(args.request));
             window.qnx.webplatform.getApplication().invocation.sendCardDone(request);
             result.noResult(true);
         } catch (e) {

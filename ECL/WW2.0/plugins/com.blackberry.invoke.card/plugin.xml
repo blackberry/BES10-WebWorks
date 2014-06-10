@@ -24,15 +24,13 @@
     <description>BlackBerry 10 Invoke Card APIs</description>
     <license>Apache 2.0</license>
 
-    <js-module src="www/client.js">
-        <merges target="blackberry.invoke.card" />
-    </js-module>
-
-    <js-module src="www/btoa.js">
-        <merges target="blackberry.invoke.card.btoa" />
-    </js-module>
-
     <platform name="blackberry10">
+        <js-module src="www/client.js">
+            <merges target="blackberry.invoke.card" />
+        </js-module>
+        <js-module src="www/btoa.js">
+            <merges target="blackberry.invoke.card.btoa" />
+        </js-module>
         <source-file src="src/blackberry10/index.js" />
         <config-file target="www/config.xml" parent="/widget">
             <feature name="com.blackberry.invoke.card" value="com.blackberry.invoke.card" />

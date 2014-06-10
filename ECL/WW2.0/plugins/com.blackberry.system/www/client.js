@@ -87,10 +87,6 @@ function defineReadOnlyField(obj, field, value) {
     });
 }
 
-_self.hasCapability = function (capability) {
-    return getFieldValue("hasCapability", {"capability": capability});
-};
-
 _self.getFontInfo = function () {
     return getFieldValue("getFontInfo");
 };

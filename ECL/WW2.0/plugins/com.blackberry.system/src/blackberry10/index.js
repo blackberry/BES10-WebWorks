@@ -126,24 +126,6 @@ module.exports = {
         }
     },
 
-    hasCapability: function (success, fail, args, env) {
-        var result = new PluginResult(args, env),
-            SUPPORTED_CAPABILITIES = [
-                "input.touch",
-                "location.gps",
-                "media.audio.capture",
-                "media.video.capture",
-                "media.recording",
-                "network.bluetooth",
-                "network.wlan"
-            ],
-            // TODO string argument surrounded by %22
-            // preserve dot for capabiliity
-            capability = args.capability.replace(/[^a-zA-Z.]+/g, "");
-
-        result.ok(SUPPORTED_CAPABILITIES.indexOf(capability) >= 0, false);
-    },
-
     getFontInfo: function (success, fail, args, env) {
         var result = new PluginResult(args, env),
             fontFamily,

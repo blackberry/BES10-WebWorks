@@ -24,13 +24,11 @@
     <description>BlackBerry 10 Push APIs</description>
     <license>Apache 2.0</license>
 
-    <dependency id="com.blackberry.utils" />
-
-    <js-module src="www/client.js">
-        <clobbers target="blackberry.push" />
-    </js-module>
-
     <platform name="blackberry10">
+        <dependency id="com.blackberry.utils" />
+        <js-module src="www/client.js">
+            <clobbers target="blackberry.push" />
+        </js-module>
         <source-file src="src/blackberry10/index.js" />
         <lib-file src="src/blackberry10/native/device/libpushjnext.so" arch="device"/>
         <lib-file src="src/blackberry10/native/simulator/libpushjnext.so" arch="simulator"/>
@@ -38,10 +36,7 @@
             <feature name="com.blackberry.push" value="com.blackberry.push" />
         </config-file>
         <config-file target="www/config.xml" parent="/widget/rim:permissions">
-        <!--
-            <rim:permit system="true">_sys_use_consumer_push</rim:permit>
-        -->
-            <rim:permit>run_when_backgrounded</rim:permit>         
+            <rim:permit>run_when_backgrounded</rim:permit>
         </config-file>
     </platform>
 </plugin>

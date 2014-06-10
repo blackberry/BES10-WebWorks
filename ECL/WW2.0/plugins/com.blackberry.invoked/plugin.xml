@@ -24,11 +24,10 @@
     <description>BlackBerry 10 Invoked APIs</description>
     <license>Apache 2.0</license>
 
-    <js-module src="www/client.js">
-        <clobbers target="blackberry.invoked" />
-    </js-module>
-
     <platform name="blackberry10">
+        <js-module src="www/client.js">
+            <clobbers target="blackberry.invoked" />
+        </js-module>
         <source-file src="src/blackberry10/index.js" />
         <source-file src="src/blackberry10/invocationEvents.js" />
         <config-file target="www/config.xml" parent="/widget">

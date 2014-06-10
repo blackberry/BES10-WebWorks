@@ -24,15 +24,15 @@
     <description>BlackBerry 10 Invoke APIs</description>
     <license>Apache 2.0</license>
 
-    <js-module src="www/client.js">
-        <merges target="blackberry.invoke" />
-    </js-module>
 
-    <js-module src="www/btoa.js">
-        <merges target="blackberry.invoke.btoa" />
-    </js-module>
 
     <platform name="blackberry10">
+        <js-module src="www/client.js">
+            <merges target="blackberry.invoke" />
+        </js-module>
+        <js-module src="www/btoa.js">
+            <merges target="blackberry.invoke.btoa" />
+        </js-module>
         <source-file src="src/blackberry10/index.js" />
         <source-file src="src/blackberry10/invocationEvents.js" />
         <config-file target="www/config.xml" parent="/widget">

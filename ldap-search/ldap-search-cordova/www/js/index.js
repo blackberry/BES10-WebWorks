@@ -12,9 +12,8 @@
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-* Author: Dennis Reumer, BlackBerry
-* Date: April 2014
 */
+
 var app = {
     // Application Constructor
     initialize: function() {
@@ -36,22 +35,14 @@ var app = {
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
-      //
-      switch (id) {
-        case "deviceready":
-            app.launchWeblink( blackberry.app.authorURL );
-            break;
-        default:
-            //nothing happens
-      }
-    },
-    //The weblink launcher and closer.
-    launchWeblink: function( url ) {
-        // _system target to have teh system browser open the url
-        var target = '_system';
-        //Launch the url in the Browser
-        var ref = window.open( encodeURI( url ), target );
-        //Exit the app
-        blackberry.app.exit();
+        console.log('Received Event: ' + id);
+        
+        bb.init({
+          controlsDark: true,
+          listsDark: true
+        });
+       
+        bb.pushScreen('home.html', 'home');
+        
     }
 };

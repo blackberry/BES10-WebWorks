@@ -1,0 +1,77 @@
+<!--
+    Copyright 2010-2014 BlackBerry Limited.
+    
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<div style="background-color:#202020" data-bb-type="screen">
+	<div data-bb-type="title" data-bb-caption="WAAs Ldap Search"></div>
+	
+	<div class='waas_background' id='waas_background_00'></div>
+
+	<div class='waas_search' id='waas_search'>
+		<input type='search' id='waas_search_field' class='waas_search_field' value='search the directory...' onfocus='search_clear();' onkeyup='search_ldap();' title='Search'/>
+	</div>
+
+	<div class='waas_card_list' id='waas_cardlist'>
+	</div>
+
+	<script>
+        const nodeJS_server = "http://mynodejsserver.test:8888/";
+		const waas_card_000 = "<div class='waas_card' id='waas_card_00'><div class='waas_card_pic' id='waas_card_pic_00'><img src='' class='waas_card_img' id='waas_card_img_00'/></div><div class='waas_card_content' id='waas_card_content_00'><div class='waas_card_name' id='waas_card_name_00'>";
+		const waas_card_001 = "</div></div></div>";
+
+
+		function search_clear () {
+			if ( document.getElementById('waas_search_field').value === 'search the directory...' ) { 
+			document.getElementById('waas_search_field').value='';
+			}
+		}
+		function search_ldap() {
+			
+			search_str = document.getElementById("waas_search_field").value;
+			if (search_str === '') {
+				$("#waas_cardlist" ).html( "" );
+
+			} else {
+    		xhr = new XMLHttpRequest();
+			xhr.open("GET", nodeJS_server+ "?"+search_str , true);
+			xhr.send();
+    
+    		xhr.onreadystatechange = function(){
+        		if (xhr.readyState == 4 && xhr.status == 200) {
+            		
+            		console.log("got the result")
+            		var output ="";
+            		var response = "["+xhr.responseText+"]";
+            		var people = eval ("("+response+")" );
+            		if ( people.length > 0 ) {
+            			console.log("getting the JSON data");
+            			for ( i=0 ; i < people.length ; i++) {
+            				output += waas_card_000;
+            				output += "name: " + people[i].name +"<br/>";
+            				if (people[i].mail ) {
+            					output += "email: " + people[i].mail +"<br/>";
+            				}
+            				if (people[i].mobile ) {
+            					output += "phone: " + people[i].mobile +"<br/>";
+            				}
+            				output += "</div></div></div>"; //waas_card_001;
+            			}
+            		}
+            		$("#waas_cardlist" ).html( output );		
+        		}
+    		}
+		}
+		}
+	</script>
+

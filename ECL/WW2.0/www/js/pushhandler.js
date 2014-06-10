@@ -20,7 +20,7 @@
  *=================================================================================*/
 
 // Configure this to be the same as the one set in config.xml
-app.pushTarget = "webworks2.ecl2.invoke.waa.push";
+app.pushTarget = "webworks20.ecl210.invoke.waa.push";
 
 app.pushHandler = function() {'use strict';
 	var pub = {};
@@ -34,7 +34,7 @@ app.pushHandler = function() {'use strict';
 		console.log("pushHandler.createPushService()");
 
 		var ops = {
-			appId : 'ecl_webworks_2',
+			appId : blackberry.app.id,
 			invokeTargetId : app.pushTarget
 		};
 		if (blackberry.push)

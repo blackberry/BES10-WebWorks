@@ -20,8 +20,8 @@
   * This xml sets the various configurations for the application. 
   *=================================================================================
 -->
-<widget xmlns:rim="http://www.blackberry.com/ns/widgets" version="2.0.4" rim:header="RIM-Widget:rim/widget" 
-	xmlns="http://www.w3.org/ns/widgets" id="ecl_webworks_2">
+<widget xmlns:rim="http://www.blackberry.com/ns/widgets" version="2.1.0" rim:header="RIM-Widget:rim/widget" 
+	xmlns="http://www.w3.org/ns/widgets" id="ecl_webworks_210">
     <name>Emergency Contact List v2</name>
     <description>Displays and syncs the latest Emergency Contact List (ECL) data pushed to the device.</description>
     <author rim:copyright="Copyright 2014 BlackBerry, unless otherwise noted.">Sebastian Barthelmess @ BlackBerry</author>
@@ -52,7 +52,7 @@
 
     <!-- Need to put an invoke entry here for push (update app.pushTarget in js/pushhandler.js to this value as well) -->
     <!-- The id here must match the invokeTargetId passed in as one of the ops to blackberry.push.PushService.create -->
-    <rim:invoke-target id="webworks2.ecl2.invoke.waa.push">
+    <rim:invoke-target id="webworks20.ecl210.invoke.waa.push">
         <type>APPLICATION</type>
         <filter>
             <action>bb.action.PUSH</action>
@@ -62,7 +62,7 @@
 
     <!-- Have an invoke entry here for when a notification is clicked on in the BlackBerry Hub -->
     <!-- This will cause the application to be opened -->
-    <rim:invoke-target id="webworks2.ecl2.invoke.waa.open">
+    <rim:invoke-target id="webworks20.ecl210.invoke.waa.open">
         <type>APPLICATION</type>
         <filter>
             <action>bb.action.VIEW</action>

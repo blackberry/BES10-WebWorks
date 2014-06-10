@@ -32,7 +32,7 @@ greater detail.
 
 ## Server Component
 
-The server/index.htm is a small test application that can be used to send requests
+The www/server/index.htm is a small test application that can be used to send requests
 to the enterprise server to push an emergency contact list to a device/phone.
 This is a standalone HTML file and can run directly from the BlackBerry filesystem,
 on a simple webserver (like Apache or Nginx), or packaged and deployed as a hybrid app
@@ -40,28 +40,11 @@ itself on BlackBerry platforms.  It handles the Excel to JSON conversion.  It al
 supports compression.  Go ahead and try compressing your data and choosing different compression
 values.  The client app handles both compressed or uncompressed data automatically.
 
+__NOTE:__ You need to enable CORS to get feedback from the BES server or it will be blocked.  Run Chrome with "--disable-web-security" or install the very cool extension at: https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi.  More instructions in the www/server/index.htm file comments.
 
 ## Known Issues
 
-The context view can be difficult to expand in HTML5 apps. 
-It seems the user must long press menu for 2 seconds before swiping to
-the left.
-
-##  File Structure
-  * config.xml - WebWorks project file.  Contains application parameters and permissions.
-  * index.html - Top level application file that initializes WebWorks and loadsthe 1st screen (contactlist.htm).
-  * contactlist.htm - Skeleton markup of Emergency Contact List view
-  * phonelist.htm - Skeleton markup of contact phone list view
-  * details.htm - Skeleton markup of details view
-  * bbui-min.js, bbui-min.css -  bbUI VERSION: 0.9.6.1
-  * index.js - Top level Javascript file that defines app namespace.
-  * contactlist.js - Creates and manages the Emergency Contact List view.
-  * phonelist.js - Creates and manages the phone list view.
-  * details.js - Creates and manages the details view.
-  * eclmodel.js - Holds and saves the contact list.
-  * pushhandlers.js - Handles the push messages.
-  * utils.js - Utility functions.  
-  * img - Contains the application icon and icons used in the application.
+None currently.
 
 ## How to Build
 
@@ -86,13 +69,33 @@ OR manually:
   * webworks plugin add com.blackberry.identity
   * webworks plugin add com.blackberry.notification	
 
-** NOTE VERY IMPORTANT TO DO THE NEXT STEP for PUSH to WORK!
-5. Update the www/config.xml on ~ line 24 -> "widget id" to be your desired app id (change from ecl_webworks_2)
+__NOTE VERY IMPORTANT TO DO THE NEXT STEP for PUSH to WORK!__
+5. Update the www/config.xml on ~ line 24 "widget id" to be your desired app id (from ecl_webworks_2)
 Then modify the two "rim:invoke-target" lines 55 & 65 to be unique (from webworks2.ecl2.invoke.waa.*)
 Then lastly modify the "push" value in www/js/pushhandler.js ~ line 23 to have the pushTarget identical to what you just defined in line 55 of config.xml.
 
 6. Connect your device or simulator, type "webworks run".  
 HINT: If your BES admin has enabled it, you may switch your device into the work perimeter and sign/deploy it directly there by typing  "webworks run --release -k SIGNING_PASSWORD"
+
+7. Contact me on Twitter @latestlinux, or your Account Manager to get more help if you run into issues. 
+And check back regularly to github, as the source is costantly being modified and improved.
+
+
+##  File Structure
+  * config.xml - WebWorks project file.  Contains application parameters and permissions.
+  * index.html - Top level application file that initializes WebWorks and loadsthe 1st screen (contactlist.htm).
+  * contactlist.htm - Skeleton markup of Emergency Contact List view
+  * phonelist.htm - Skeleton markup of contact phone list view
+  * details.htm - Skeleton markup of details view
+  * bbui-min.js, bbui-min.css -  bbUI VERSION: 0.9.6.1
+  * index.js - Top level Javascript file that defines app namespace.
+  * contactlist.js - Creates and manages the Emergency Contact List view.
+  * phonelist.js - Creates and manages the phone list view.
+  * details.js - Creates and manages the details view.
+  * eclmodel.js - Holds and saves the contact list.
+  * pushhandlers.js - Handles the push messages.
+  * utils.js - Utility functions.  
+  * img - Contains the application icon and icons used in the application.
 
 ## More Info
 

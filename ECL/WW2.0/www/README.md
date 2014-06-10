@@ -3,7 +3,8 @@ BB10 Emergency Contact List v2
 
 ## Description
 
-* __NEW!__ Ported to WebWorks 2.0 
+* __NEW!__ Ported to WebWorks 2.x 
+* Complete installation instructions right here (now with automated plugin installation).
 * Error messaging and return values from BES integrated into server push code (/server/)
 * Now includes integrated compression routines. Compress your payload using LZMA and break
 past the 8K limit for your contacts!
@@ -55,9 +56,8 @@ None currently.
 3. Change to the root directory of the project (eg., ~/BES10-WebWorks/ECL/WW2.0/), and run "webworks create ECL" - this will create the rest of the necessary platform files.  You may then delete the directory it creates "ECL"
 
 4. Make sure you have added all appropriate plugins in the plugin directory, I have included a node script to do this for you automatically (anywhere inside the project directory):
- * node update_plugins.js
-
-OR manually: 
+  * node update_plugins.js
+    OR manually: 
   * webworks plugin add com.blackberry.push 
   * webworks plugin add com.blackberry.app 
   * webworks plugin add com.blackberry.utils 
@@ -67,7 +67,7 @@ OR manually:
   * webworks plugin add com.blackberry.invoke.card
   * webworks plugin add com.blackberry.ui.contextmenu
   * webworks plugin add com.blackberry.identity
-  * webworks plugin add com.blackberry.notification	
+  * webworks plugin add com.blackberry.notification
 
 __NOTE VERY IMPORTANT TO DO THE NEXT STEP for PUSH to WORK!__
 5. Update the www/config.xml on ~ line 24 "widget id" to be your desired app id (from ecl_webworks_2)

@@ -18,14 +18,19 @@ var path = require('path');
 var sys = require('sys')
 var exec = require('child_process').exec;
 
-function puts(error, stdout, stderr) { 
+// Each time one of the exec's below completes, give their status.
+function completed(plug, error, stdout, stderr) { 
 	if(error==null) 
-		console.log('\tUpdated plugin')
+		console.log('\tUpdated plugin '+plug);
 	else 
 		sys.puts(stdout);
+
+	if (total-- == 1)
+		console.log('\nFinished updating!');
 }
 
+// Fire off all the plugin downloads async...
+var total = pluginlist.length;
 pluginlist.forEach(function(plug) {
-    exec("webworks plugin add " + plug, puts);
+    exec("webworks plugin add " + plug, completed(plug));
 });
-

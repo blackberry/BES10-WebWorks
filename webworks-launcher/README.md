@@ -17,7 +17,7 @@ In the docs directory an detailed instruction manual on how to build the launche
 **Author(s)**
 
 * [Dennis Reumer](http://www.twitter.com/reumerd)
-
+* [Chad Tetreault](http://www.palebanana.com)
 
 ## Instructions how to build
 
@@ -29,7 +29,7 @@ In the docs directory an detailed instruction manual on how to build the launche
 
 4. Create your new Project
 
-5. In the plugins tab add the "com.blackberry.app" plugin
+5. In the plugins tab add the "com.blackberry.app", and "com.blackberry.invoke" plugins
 
 6. Copy over the files from this Github project onto the newly created project replacing all existing files
 

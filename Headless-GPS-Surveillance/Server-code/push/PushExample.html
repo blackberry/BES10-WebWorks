@@ -1,0 +1,171 @@
+<!--
+ Copyright 2012 Research In Motion Limited.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Push Server Test</title>
+
+<script type="text/javascript">
+	var typeAction="sendlocation";
+	var destinationType = "";
+	var msgPOSTbody = "";
+	
+	function determineDestinationType(){
+		var choice= document.getElementById('choiceOfDestination').value;
+		var destination = document.getElementById('pin');
+		var destLabel = document.getElementById('destLabel');
+		
+		destination.disabled=false;
+		
+		if(choice=="pin"){
+			destinationType="pin";
+			destLabel.innerHTML="Enter PIN:";
+			destination.placeholder = "ie. 2FFFE3C";
+		}
+		else if(choice=="group"){
+			destLabel.innerHTML="Enter BES Group Name:";			
+			destinationType="group";
+			destination.placeholder = "ie. HumanResources";
+		}
+		else{
+			destinationType="";		
+			destLabel.innerHTML="Enter Destination:";							
+			destination.disabled=true;
+			destination.placeholder = "Choose Destination Type first...";
+			
+		}
+	}
+	
+	
+	function determineAction(){
+		var choice= document.getElementById('choiceOfAction').value;
+		var msg = document.getElementById('msg');
+		
+		if(choice=="SendLocation"){
+			msg.style.display = "none";
+			typeAction = "sendlocation";
+		}
+		else if(choice=="Alert"){
+			msg.style.display = "block";
+			typeAction = "Alert";			
+		}
+	}
+	
+    function doPost(){
+	    
+	    if(destinationType==""){
+		    alert("Choose Destination Type");
+            document.getElementById("result").innerHTML = "Error: You didn't choose which destination type";
+		    
+		    return;
+	    }
+	    else if(destinationType=="pin"){
+        	var pin = document.getElementById("pin").value.trim();
+	    }
+	    else if(destinationType=="group"){
+        	var pin = "$"+encodeURI(document.getElementById("pin").value);
+	    }
+	    
+        var xmlhttp = new XMLHttpRequest();
+
+        var bes = document.getElementById("bes").value;
+        var mdsPort = document.getElementById("mdsPort").value;
+        var appPort = document.getElementById("appPort").value;
+        var content = document.getElementById("content").value;
+
+		var url= "http://" + bes + ":" + mdsPort + "/push?DESTINATION=" + pin + "&PORT=" + appPort + "&REQUESTURI=/";
+        xmlhttp.open("POST", url, true);
+        xmlhttp.onreadystatechange=function() {
+            if (xmlhttp.readyState==4) {
+                document.getElementById("result").innerHTML = "Sent - Although the Message was send, this form is not designed to test if BES/MDS has actually received your message";
+                document.getElementById("url").innerHTML = "URL = "+ url;
+                document.getElementById("postbody").innerHTML = "POST Body = "+ msgPOSTbody;
+            }
+        }
+
+        xmlhttp.setRequestHeader("Content-Type", "text/plain");
+        
+        if(typeAction=="sendlocation"){
+	        msgPOSTbody = "sendLocation";	        
+	        xmlhttp.send(msgPOSTbody); // POST BODY
+        }
+        else if(typeAction=="Alert"){
+			msgPOSTbody = "Alert - "+content;
+	        xmlhttp.send(msgPOSTbody);
+        }
+        else{
+	        msgPOSTbody="";
+	        alert("Unknown Action"); // should not get there
+        }
+    }
+
+    function getParameterByName(name) {
+        var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+        return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+    }
+</script>
+
+</head>
+<body>
+Choose Destination Type:<br / >
+<select name="choiceOfDestination" id="choiceOfDestination" onChange="determineDestinationType()">
+<option value=""></option>	
+<option value="pin">Send to an Individual BlackBerry PIN</option>
+<option value="group">Send to a BES Group of users(many users)</option>
+</select>
+<br><br>
+	
+<div id="destLabel" style="display:inline">Destination</div> <br />
+<input id="pin" type="text" size="50"  placeholder="Choose Destination Type first..." disabled="disabled"/>
+<br /><br />
+
+BES Address: <br />
+<input id="bes" type="text" size="50" value="attts-fusion01.attlab.sw.rim.net"/>
+<br /><br />
+MDS-CS Listen Port: <br />
+<input id="mdsPort" type="text" value="8080" />
+<br /><br />
+Application Listen Port: <br />
+<input id="appPort" type="text" value="BB10-Surveillance" disabled="disabled"/>
+<br /><br />
+
+Choose Action:<br / >
+<select name="choiceOfAction" id="choiceOfAction" onChange="determineAction()">
+<option value="SendLocation">Get Device Location</option>
+<option value="Alert">Send Alert Message via Notifications</option>
+</select>
+<br><br>
+
+<div id="msg" style="display: none">
+Alert Message for the User: <br />
+<textarea id="content" rows="8" cols="50" ></textarea>
+</div>
+
+<br />
+<input type="button" onclick="doPost();" value="Do Push"/>
+<br />
+<div id="result" style="color: red"></div>
+<br /> <br />
+<div id="sentdata">
+<div id="url" style="color: blue"></div>
+<div id="postbody" style="color: blue"></div>
+
+</div>
+
+</body>
+</html>
+

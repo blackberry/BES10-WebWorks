@@ -1,0 +1,11 @@
+{
+    "id": "community.surveillance.gps.HeadlessUI",
+    "name": "Headless WebWorks Application",
+    "lib": {
+        "www": {
+            "uri": "/Applications/BB10 WebWorks SDK 2.2.0.15/webworks-cli/templates/headless-template/www",
+            "id": "custom",
+            "version": "0"
+        }
+    }
+}

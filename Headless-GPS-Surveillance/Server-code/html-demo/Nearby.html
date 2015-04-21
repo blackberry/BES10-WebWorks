@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Who's Nearby?</title>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+  <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+  <script type="text/javascript" src="lib/gmaps.js"></script>
+  <script type="text/javascript" src="lib/moment.js"></script>  
+  <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.3.0/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="examples.css" />
+  <script type="text/javascript">
+	  
+    var map;
+	
+	function myLocation(position){
+		var myLat = position.coords.latitude;
+		var myLon = position.coords.longitude;
+		
+		var nearbyUrl = "http://shikhir.com/nearby.php?lat="+myLat+"&lng="+myLon+"&radius=6000";
+		
+		console.log(nearbyUrl);
+		
+	      
+	    $.getJSON(nearbyUrl, null, function(results){
+		    map = new GMaps({
+		      el: '#map',
+		      lat: myLat,
+		      lng: myLon
+		    });
+		    console.log(results);
+		    
+			for(var i=0; i<results.length; i++){
+				var rolloverText = "PIN: "+results[i].pin;
+				var distance = results[i].distance + " miles";
+				var now = moment();
+				var lastSeen = moment.unix(results[i].unixtime);
+				if(results[i].distance > 10){
+					distance = Math.round(results[i].distance) + " miles";
+				}
+				else if(results[i].distance > 1){
+					distance = parseFloat(results[i].distance).toFixed(1) + " miles";
+				}
+				else if(results[i].distance > 0.1){
+					distance = parseFloat(results[i].distance).toFixed(2) + " miles";
+				}
+				else{
+					distance = Math.round(5280 * results[i].distance) + " feet";
+				}
+				console.log(rolloverText);
+				console.log(distance);
+				console.log(lastSeen.fromNow());
+				
+				map.addMarker({
+				  lat: results[i].latitude,
+				  lng: results[i].longitude,
+				  title: rolloverText,
+				  infoWindow: {
+				  	content: '<div style="height: 60px; width:150px">PIN: '+results[i].pin+'<br />'+'Distance: '+distance+'<br />Last Seen: '+lastSeen.fromNow()+' </div>',
+				  	disableAutoPan: true
+				  }
+				});
+			}
+		});
+	}
+
+	$(document).ready(function(){
+		moment().format();
+		if (navigator.geolocation) {
+		  navigator.geolocation.getCurrentPosition(myLocation, function(){
+			  console.log('Error: Cannot get your location');
+		  });
+		}
+		else{
+			alert('cannot get current location. Please reload page and grant access');
+		} 
+	});
+  </script>
+</head>
+<body>
+  <h1>Nearby</h1>
+  <div class="row">
+    <div class="span11">
+      <div id="map"></div>
+    </div>
+  </div>
+</body>
+</html>

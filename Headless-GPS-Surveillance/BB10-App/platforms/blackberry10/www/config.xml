@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="community.surveillance.gps.HeadlessUI" version="0.2.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:rim="http://www.blackberry.com/ns/widgets">
+    <feature name="com.blackberry.invoke" value="com.blackberry.invoke" />
+    <feature name="com.blackberry.ui.dialog" value="com.blackberry.ui.dialog" />
+    <feature name="com.blackberry.ui.toast" value="com.blackberry.ui.toast" />
+    <feature name="com.blackberry.ui.cover" value="com.blackberry.ui.cover" />
+    <feature name="com.blackberry.app" value="com.blackberry.app" />
+    <feature name="com.blackberry.identity" value="com.blackberry.identity" />
+    <rim:permissions>
+        <rim:permit>read_device_identifying_information</rim:permit>
+    </rim:permissions>
+    <icon src="icon.png" />
+    <config-file parent="/qnx" target="bar-descriptor.xml">
+        <asset entryPointId="HeadlessService" type="Qnx/Elf">assets/HeadlessService</asset>
+        <asset entryPointId="HeadlessUI" type="Qnx/Elf">wwe</asset>
+        <entryPoint id="HeadlessUI">
+            <entryPointType>Qnx/WebKit</entryPointType>
+        </entryPoint>
+        <entryPoint id="HeadlessService">
+            <name>Headless Service</name>
+            <entryPointType>Qnx/Elf</entryPointType>
+            <permission system="true">_sys_run_headless</permission>
+            <permission system="true">_sys_headless_nostop</permission>
+            <permission>post_notification</permission>
+            <permission>read_device_identifying_information</permission>
+            <permission>access_internet</permission>
+            <permission>access_wifi_public</permission>
+            <permission>access_location_services</permission>
+        </entryPoint>
+        <invoke-target id="community.surveillance.gps.HeadlessService">
+            <invoke-target-type>application.headless</invoke-target-type>
+            <invoke-target-name>Headless Service</invoke-target-name>
+            <entry-point-id>HeadlessService</entry-point-id>
+            <filter>
+                <action>bb.action.system.STARTED</action>
+                <mime-type>application/vnd.blackberry.system.event.STARTED</mime-type>
+                <action>bb.action.system.INSTALLED</action>
+                <mime-type>application/vnd.blackberry.system.event.INSTALLED</mime-type>
+                <property value="data://local" var="uris" />
+                <action>community.surveillance.gps.HeadlessService.RESET</action>
+                <mime-type>*</mime-type>
+                <property value="headless:" var="uris" />
+                <action>bb.action.PUSH</action>
+                <mime-type>application/vnd.push</mime-type>
+            </filter>
+        </invoke-target>
+        <invoke-target id="community.surveillance.gps.HeadlessUI">
+            <invoke-target-type>application</invoke-target-type>
+            <entry-point-id>HeadlessUI</entry-point-id>
+        </invoke-target>
+    </config-file>
+    <name>Surveillance</name>
+    <author>Shikhir Singh &amp; the WAAwesome team!</author>
+    <description>A sample app which tracks and logs an Employee's GPS location. Please visit code.shikhir.com for the latest version of this code</description>
+    <content src="index.html" />
+    <license>
+	Apache 2.0
+	</license>
+    <access subdomains="true" uri="*" />
+</widget>

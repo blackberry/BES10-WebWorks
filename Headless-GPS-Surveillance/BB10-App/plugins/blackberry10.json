@@ -1,0 +1,67 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {
+            "www/config.xml": {
+                "parents": {
+                    "/widget": [
+                        {
+                            "xml": "<feature name=\"com.blackberry.invoke\" value=\"com.blackberry.invoke\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"com.blackberry.ui.dialog\" value=\"com.blackberry.ui.dialog\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"com.blackberry.ui.toast\" value=\"com.blackberry.ui.toast\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"com.blackberry.ui.cover\" value=\"com.blackberry.ui.cover\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"com.blackberry.app\" value=\"com.blackberry.app\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"com.blackberry.identity\" value=\"com.blackberry.identity\" />",
+                            "count": 1
+                        }
+                    ],
+                    "/widget/rim:permissions": [
+                        {
+                            "xml": "<rim:permit>read_device_identifying_information</rim:permit>",
+                            "count": 1
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "installed_plugins": {
+        "com.blackberry.invoke": {
+            "PACKAGE_NAME": "community.surveillance.gps.HeadlessUI"
+        },
+        "com.blackberry.ui.dialog": {
+            "PACKAGE_NAME": "community.surveillance.gps.HeadlessUI"
+        },
+        "com.blackberry.ui.toast": {
+            "PACKAGE_NAME": "community.surveillance.gps.HeadlessUI"
+        },
+        "com.blackberry.ui.cover": {
+            "PACKAGE_NAME": "community.surveillance.gps.HeadlessUI"
+        },
+        "com.blackberry.app": {
+            "PACKAGE_NAME": "community.surveillance.gps.HeadlessUI"
+        },
+        "com.blackberry.identity": {
+            "PACKAGE_NAME": "community.surveillance.gps.HeadlessUI"
+        }
+    },
+    "dependent_plugins": {}
+}

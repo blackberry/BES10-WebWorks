@@ -1,18 +1,70 @@
-<widget id="com.yourcompany.weblauncher.bb10.home" 
-  xmlns="http://www.w3.org/ns/widgets" 
-  xmlns:cdv="http://cordova.apache.org/ns/1.0" 
-  xmlns:rim="http://www.blackberry.com/ns/widgets" version="0.0.1">
-  <icon src="img/logo.png"/>
-  <author email="dreumer@blackberry.com" href="http://www.blackberry.com/">Dennis Reumer</author>
-  <description>A simple weblauncher</description>
-  <content src="index.html"/>
-  <preference name="AutoHideSplashScreen" value="true"/>
-  <preference name="ChildBrowser" value="disable"/>
-  <preference name="DiskCache" value="disable"/>
-  <preference name="HideKeyboardFormAccessoryBar" value="disable"/>
-  <preference name="Orientation" value="default"/>
-  <preference name="PopupBlocker" value="disable"/>
-  <preference name="WebSecurity" value="disable"/>
-  <preference name="BackgroundColor" value="0xff000000"/>
-  <name>Home</name>
+<?xml version='1.0' encoding='utf-8'?>
+<!--
+ Copyright 2015 BlackBerry Ltd.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ express or implied. See the License for the specific language
+ governing permissions and  limitations under the License.
+-->
+
+
+<!--
+    *** EDIT THE FOLLOWING XML FIELDS ***
+    
+    - <widget id="com.blackberry.sample.weblauncher" ... 
+        - unique app id
+    - <name>
+        - app name shown on the phone
+    - <description>
+        - short description of this app
+    - <author email
+        - contact email
+    - <author href
+        - your website
+    - <icon src
+        - path to app icon
+-->
+
+<widget id="com.blackberry.sample.weblauncher" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    
+    <name>
+        Launcher Test App
+    </name>
+    
+    <description>
+        Description of this app
+    </description>
+    
+    <author email="noreply@blackberry.com" href="http://developer.blackberry.com">
+        BlackBerry Canada
+    </author>
+    
+    <icon src="www/img/logo.png" />
+
+    <!-- !!! DON'T CHANGE ANYTHING BELOW HERE !!! -->
+    <!-- !!! DON'T CHANGE ANYTHING BELOW HERE !!! -->
+    <!-- !!! DON'T CHANGE ANYTHING BELOW HERE !!! -->
+
+    <content src="index.html" />
+    <access origin="*" />
+
+    <!-- ios -->
+    <preference name="BackupWebStorage" value="local"/>
+    <platform name="ios">
+        <allow-intent href="*" />
+    </platform>
+
+    <!-- android -->
+    <platform name="android">
+        <allow-intent href="*" />
+    </platform>
+
 </widget>

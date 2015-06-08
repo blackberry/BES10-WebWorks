@@ -1,53 +1,130 @@
-BlackBerry 10 WebWorks Web launcher V1.0
-========================================
+# Cordova (Cross Platform) Web Launcher
 
-## Description
+This sample shows how to make a standalone app which will launch a website in the native browser.
 
-The BlackBerry 10 WebWorks web launcher is a simple WebWorks project that can be used to 
-create BES deployable shortcuts to internal company web resources.
-By specifying the URL, icon, name and description, this launcher will open the browser on 
-the device to the specified url. An easy way to publish internal websites and other web resources.
-
-In the docs directory an detailed instruction manual on how to build the launcher is included.
-
-**Applies To**
-
-* Client: [WebWorks 2.0 or higher](http://developer.blackberry.com/html5/)
+The documentation is quite detailed, but please note it is actually quite easy to customize the app for your own needs.
 
 **Author(s)**
 
+* [Chad Tetreault](http://www.twitter.com/chadtatro)
 * [Dennis Reumer](http://www.twitter.com/reumerd)
-* [Chad Tetreault](http://www.palebanana.com)
 
-## Instructions how to build
+**Applies To**
 
-1. Ensure you have WebWorks 2.0 Gold or higher installed
+* BlackBerry 10 WebWorks
+* Apache Cordova
 
-2. Ensure you have properly setup your signing keys
+**Tested On**
 
-3. Run WebWorks
+* BlackBerry 10
+* Android
+* iOS
 
-4. Create your new Project
+**Known Issues**
 
-5. In the plugins tab add the "com.blackberry.app", and "com.blackberry.invoke" plugins
+There is currently a bug in the Cordova *'InAppBrowser'* plugin. This has since been fixed, but for now you must download the plugin directly from the GitHub repository instead of adding from the Cordova Plugin registry. *(Follow the Installation section for more details)*.
 
-6. Copy over the files from this Github project onto the newly created project replacing all existing files
+###
 
-7. Create your own 114x114px icon and save it as logo.png as save it to the www/img/ directory in your newly created poject
+**Platform Quirks**
 
-8. Adjust and save the projects settings (!! dont forget to press the save button)
+* iOS
+
+ Developers are **not** able to programatically close an application on iOS. The app will stay open. This is a platform limitation that cannot be helped at this time.
+
+* Android
+
+ Default behaviour is that the app stays in 'Recent Apps' menu when closed.
+
+**Contributing**
+
+ To contribute code to this repository you must be [signed up as an official contributor](http://blackberry.github.com/howToContribute.html).
+
+## Required Plugins ##
+
+	com.blackberry.app
+	com.blackberry.invoke
+	com.apache.cordova.inappbrowser
+
+## Installation ##
+
+It's best to follow each individual [Platform Guide](https://cordova.apache.org/docs/en/4.0.0/guide_platforms_index.md.html#Platform%20Guides) to do this as easy as possible.
+
+* [BlackBerry 10](https://developer.blackberry.com/html5/documentation/v2_2/getting_started.html)
+* [Android](https://cordova.apache.org/docs/en/4.0.0/guide_platforms_android_index.md.html#Android%20Platform%20Guide)
+* [iOS](https://cordova.apache.org/docs/en/4.0.0/guide_platforms_ios_index.md.html#iOS%20Platform%20Guide)
+
+You will require the SDK, and environmental setup for each platform before you continue with building this app.
+
+You will also require [Apache Cordova](http://cordova.io)
+
+## Configure the App
+To customize the apps for your needs, follow the instructions listed at the top of both of the following files:
+
+* /config.xml
+* /www/js/index.js
+
+
+## How to Build
+
+To build and deploy on BlackBerry 10 follow these steps. For other platforms, please refer to their respective [Platform Guide(s)](https://cordova.apache.org/docs/en/4.0.0/guide_platforms_index.md.html#Platform%20Guides) 
+
+**BlackBerry 10**
+
+1. Clone this repo to your local machine.
+
+2. Ensure the [BlackBerry 10 WebWorks SDK 2.0](https://developer.blackberry.com/html5/download/sdk) is correctly installed, and your setup your signing keys as described in the [Getting Started Guide](https://developer.blackberry.com/html5/documentation/v2_2/getting_started.htm).
+
+3. Open a command prompt (windows) or terminal (mac) and run the following command:
+
 	```
-    - Change App ID to your own package name
-    - Change App Name to your own app name
-    - Change App Description to your own description
-    - Change the Author to your own author name
-    - Change the Author email to your own author email
-    - !! IMPORTANT !!
-    - Change the Author URL to the URL you want to launch (e.g. http://www.blackberry.com)
-    ```
+	cordova create <your-project-name-here>
+	```
 
-9. Build the App
+4. In the new project folder, **replace** the www folder with the www folder from **this** project
 
-10. Deploy through the BES (get the build from "<WebWorks Projects>/<your project>/platforms/blackbery10/build/device/bb10app.bar" )
+5. In the new project folder, **replace** the config.xml file with the config.xml from **this** project
 
 
+6. Run the following commands to add plugins used by **this app**
+
+ Don't forget to add the InAppBrowser plugin that was [downloaded from the Cordova GitHub Repo](https://github.com/apache/cordova-plugin-inappbrowser).
+
+ ```cordova plugin add com.blackberry.appp```
+ ```cordova plugin add com.blackberry.invoke```
+ ```cordova plugin add <path-to-downloaded-plugin-here>```
+
+7. Add the Platforms you want to target
+
+ ```cordova platform add <platform-here>```
+
+8. Build the project
+
+ ```cordova build```
+
+9. To deploy the app, again refer to the [Platform Guide(s)](https://cordova.apache.org/docs/en/4.0.0/guide_platforms_index.md.html#Platform%20Guides). 
+
+ For **BlackBerry 10** Run the following command to build and deploy the app to a device connected via USB
+
+	```
+	webworks run
+	```
+
+## More Info
+
+* [BlackBerry HTML5 WebWorks](https://bdsc.webapps.blackberry.com/html5/) - Downloads, Getting Started guides, samples, code signing keys.
+* [BlackBerry WebWorks Development Guides](https://bdsc.webapps.blackberry.com/html5/documentation)
+* [BlackBerry WebWorks Community Forums](http://supportforums.blackberry.com/t5/Web-and-WebWorks-Development/bd-p/browser_dev)
+* [BlackBerry Open Source WebWorks Contributions Forums](http://supportforums.blackberry.com/t5/BlackBerry-WebWorks/bd-p/ww_con)
+
+## Contributing Changes
+
+Please see the [README](https://github.com/blackberry/BB10-WebWorks-Samples) of the BB10-WebWorks-Samples repository for instructions on how to add new Samples or make modifications to existing Samples.
+
+## Bug Reporting and Feature Requests
+
+If you find a bug in a Sample, or have an enhancement request, simply file an [Issue](https://github.com/blackberry/BB10-WebWorks-Samples/issues) for the Sample.
+
+## Disclaimer
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

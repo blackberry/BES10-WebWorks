@@ -18,8 +18,8 @@
 
 <!--
     *** EDIT THE FOLLOWING XML FIELDS ***
-    
-    - <widget id="com.blackberry.sample.weblauncher" ... 
+
+    - <widget id="com.blackberry.sample.weblauncher" ...
         - unique app id
     - <name>
         - app name shown on the phone
@@ -34,19 +34,19 @@
 -->
 
 <widget id="com.blackberry.sample.weblauncher" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    
+
     <name>
         Launcher Test App
     </name>
-    
+
     <description>
         Description of this app
     </description>
-    
+
     <author email="noreply@blackberry.com" href="http://developer.blackberry.com">
         BlackBerry Canada
     </author>
-    
+
     <icon src="www/img/logo.png" />
 
     <!-- !!! DON'T CHANGE ANYTHING BELOW HERE !!! -->

@@ -22,7 +22,7 @@ The documentation is quite detailed, but please note it is actually quite easy t
 
 **Known Issues**
 
-There is currently a bug in the Cordova *'InAppBrowser'* plugin. This has since been fixed, but for now you must download the plugin directly from the GitHub repository instead of adding from the Cordova Plugin registry. *(Follow the Installation section for more details)*.
+* None
 
 ###
 
@@ -44,7 +44,6 @@ There is currently a bug in the Cordova *'InAppBrowser'* plugin. This has since 
 
 	com.blackberry.app
 	com.blackberry.invoke
-	com.apache.cordova.inappbrowser
 
 ## Installation ##
 
@@ -67,7 +66,7 @@ To customize the apps for your needs, follow the instructions listed at the top 
 
 ## How to Build
 
-To build and deploy on BlackBerry 10 follow these steps. For other platforms, please refer to their respective [Platform Guide(s)](https://cordova.apache.org/docs/en/4.0.0/guide_platforms_index.md.html#Platform%20Guides) 
+To build and deploy on BlackBerry 10 follow these steps. For other platforms, please refer to their respective [Platform Guide(s)](https://cordova.apache.org/docs/en/4.0.0/guide_platforms_index.md.html#Platform%20Guides)
 
 **BlackBerry 10**
 
@@ -88,11 +87,8 @@ To build and deploy on BlackBerry 10 follow these steps. For other platforms, pl
 
 6. Run the following commands to add plugins used by **this app**
 
- Don't forget to add the InAppBrowser plugin that was [downloaded from the Cordova GitHub Repo](https://github.com/apache/cordova-plugin-inappbrowser).
-
  ```cordova plugin add com.blackberry.appp```
  ```cordova plugin add com.blackberry.invoke```
- ```cordova plugin add <path-to-downloaded-plugin-here>```
 
 7. Add the Platforms you want to target
 
@@ -102,7 +98,7 @@ To build and deploy on BlackBerry 10 follow these steps. For other platforms, pl
 
  ```cordova build```
 
-9. To deploy the app, again refer to the [Platform Guide(s)](https://cordova.apache.org/docs/en/4.0.0/guide_platforms_index.md.html#Platform%20Guides). 
+9. To deploy the app, again refer to the [Platform Guide(s)](https://cordova.apache.org/docs/en/4.0.0/guide_platforms_index.md.html#Platform%20Guides).
 
  For **BlackBerry 10** Run the following command to build and deploy the app to a device connected via USB
 

@@ -23,39 +23,41 @@ var url = 'http://blackberry.com';
 var target = '_system';
 
 var app = {
-    // Application Constructor
-    initialize: function () {
-        this.bindEvents();
-    },
-    bindEvents: function () {
-        document.addEventListener('deviceready', this.onDeviceReady, false);
-    },
-    onDeviceReady: function () {
+	// Application Constructor
+	initialize: function() {
+		this.bindEvents();
+	},
+	bindEvents: function() {
+		document.addEventListener('deviceready', this.onDeviceReady, false);
+	},
+	onDeviceReady: function() {
 
-        // for bb10 we must use the invoke framework as _system target doesn't open system browser, but in app
-        var isBlackberry = window.blackberry || false;
+		// for bb10 we must use the invoke framework as _system target doesn't open system browser, but in app
+		var isBlackberry = window.blackberry || false;
 
-        // for bb we have to use their own api
-        if (isBlackberry) {
-            blackberry.invoke.invoke({
-                target: "sys.browser",
-                uri: url
-            }, function () {
-                    blackberry.app.exit();
-                }, function () { });
+		// for bb we have to use their own api
+		if (isBlackberry) {
+			blackberry.invoke.invoke({
+				target: "sys.browser",
+				uri: url
+			}, function() {
+				blackberry.app.exit();
+			}, function() {});
 
-            // the rest, we can use navigator
-            // NOTE: iOS doesn't allow devs to close an app, no way around this, platform limitation
-        } else {
-            var windowRef = cordova.InAppBrowser.open(url, target);
+			// the rest, we can use navigator
+			// NOTE: iOS doesn't allow devs to close an app, no way around this, platform limitation
+		}
+		else {
+			var windowRef = window.open(url, target);
 
-            setTimeout(function () {
-                try {
-                    navigator.app.exitApp();
-                } catch (e) { }
-            }, 500);
-        }
-    },
+			setTimeout(function() {
+				try {
+					navigator.app.exitApp();
+				}
+				catch (e) {}
+			}, 500);
+		}
+	},
 };
 
 app.initialize();

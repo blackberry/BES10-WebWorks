@@ -1,0 +1,326 @@
+/* Copyright 2015 BlackBerry Ltd.
+
+ Licensed under the Apache License, Version 2.0 (the 'License');
+ you may not use this file except in compliance with the License.
+
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an 'AS IS' BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ express or implied. See the License for the specific language
+ governing permissions and limitations under the License. */
+
+
+/* fonts for material design */
+
+@font-face {
+  font-family: 'Aerial';
+  font-style: normal;
+  font-weight: 400;
+  src: local('RobotoDraft'), local('RobotoDraft-Regular'), url(https://fonts.gstatic.com/s/robotodraft/v1/0xES5Sl_v6oyT7dAKuoni4gp9Q8gbYrhqGlRav_IXfk.woff2) format('woff2'), url(https://fonts.gstatic.com/s/robotodraft/v1/0xES5Sl_v6oyT7dAKuoni7rIa-7acMAeDBVuclsi6Gc.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'RobotoDraft';
+  font-style: normal;
+  font-weight: 500;
+  src: local('RobotoDraft Medium'), local('RobotoDraft-Medium'), url(https://fonts.gstatic.com/s/robotodraft/v1/u0_CMoUf3y3-4Ss4ci-VwXJuJo8UJJfpGKt7pXjBv4s.woff2) format('woff2'), url(https://fonts.gstatic.com/s/robotodraft/v1/u0_CMoUf3y3-4Ss4ci-VwaTA90I55Xt7owhZwpPnMsc.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'RobotoDraft';
+  font-style: normal;
+  font-weight: 700;
+  src: local('RobotoDraft Bold'), local('RobotoDraft-Bold'), url(https://fonts.gstatic.com/s/robotodraft/v1/u0_CMoUf3y3-4Ss4ci-Vwf79_ZuUxCigM2DespTnFaw.woff2) format('woff2'), url(https://fonts.gstatic.com/s/robotodraft/v1/u0_CMoUf3y3-4Ss4ci-VwRbnBKKEOwRKgsHDreGcocg.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'RobotoDraft';
+  font-style: italic;
+  font-weight: 400;
+  src: local('RobotoDraft Italic'), local('RobotoDraft-Italic'), url(https://fonts.gstatic.com/s/robotodraft/v1/er-TIW55l9KWsTS1x9bTfgeOulFbQKHxPa89BaxZzA0.woff2) format('woff2'), url(https://fonts.gstatic.com/s/robotodraft/v1/er-TIW55l9KWsTS1x9bTfoo3ZslTYfJv0R05CazkwN8.woff) format('woff');
+}
+
+
+/* globals */
+
+* {
+  font-family: 'RobotoDraft' !important;
+}
+
+
+/* login */
+
+.header-wrapper {
+  position: absolute;
+  top: 4.5em;
+  width: 100%;
+  text-align: center;
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28);
+}
+
+.header-wrapper img {
+  height: auto;
+  width: 46%;
+  border: 2px solid #fff;
+  border-radius: 50%;
+}
+
+.header-wrapper h2 {
+  color: #ffffff;
+  text-transform: capitalize;
+}
+
+.loginView {
+  background: url('../assets/landing.jpg');
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.login-wrapper {
+  position: absolute;
+  width: 94%;
+  margin-left: 3%;
+}
+
+.login-wrapper h4 {
+  color: #f00;
+  text-transform: capitalize;
+  text-align: center;
+}
+
+
+/* org page */
+
+.spin-thumbnail {
+  -webkit-animation: spinHorizontal .3s 1 linear;
+}
+
+@-webkit-keyframes spinHorizontal {
+  0% {
+    /*opacity: 1;*/
+    -webkit-transform: rotateY(0deg);
+  }
+  100% {
+    /*opacity: 0.5;*/
+    -webkit-transform: rotateY(180deg);
+  }
+}
+
+.light-icon {
+  color: #ccc;
+  font-size: 16px !important;
+}
+
+
+/* so content always fills 100% - override */
+
+.scroll {
+  height: 100% !important;
+}
+
+.light-grey-icon {
+  color: #aaa;
+  font-size: 20px !important;
+}
+
+.selected-user {
+  background-color: #eee;
+}
+
+
+/* override fab-icon opacity of label backgrounds */
+
+[data-mfb-label]:after {
+  background: rgba(0, 0, 0, 0.8) !important;
+}
+
+
+/* side menu */
+
+#custom-sidemenu .item {
+  border-color: #3A80CA;
+}
+
+#custom-sidemenu a {
+  color: #f1f1f1;
+  background-color: #116ccc;
+}
+
+#custom-sidemenu a i {
+  font-size: 25px;
+}
+
+.menu-header {
+  background: rgba(255, 255, 255, 0.15);
+  line-height: 32px;
+  padding: 8px;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+}
+
+ion-side-menu {
+  background-color: #116ccc !important;
+}
+
+.sidemenu-header {
+  height: 195px;
+  overflow: hidden;
+  text-align: center;
+  background: url('../assets/profile-background.jpg');
+  background-size: cover;
+}
+
+.sidemenu-header h1 {
+  position: relative;
+  margin-top: 145px;
+  color: #f1f1f1;
+  font-size: 22px;
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28);
+}
+
+
+/* tab overrides for profile page */
+
+.tabs {
+  height: 48px;
+  position: initial;
+  background-color: #444444;
+  background-image: none;
+  padding-top: 0;
+}
+
+.tab-item {
+  color: #f1f1f1;
+}
+
+a {
+  text-decoration: none;
+  color: #333;
+}
+
+.mfb-component__button--main, .mfb-component__button--child {
+  background-color: #0c63ee !important;
+}
+
+.bar-bb {
+  background-color: #0092cc;
+}
+
+.clearSearchIcon {
+  font-size: 20px;
+  padding-left: 20px;
+}
+
+.bar-kinda-dark {
+  background-color: #ddd;
+}
+
+.bb-blue {
+  background-color: #0092cc;
+}
+
+.bar-bb-blue {
+  background-color: #0092cc;
+}
+
+.bar-dark-grey {
+  background-color: #555;
+}
+
+.bar-dark-grey h1, .bar-bb h1 {
+  color: #f1f1f1;
+}
+
+
+/* user profile */
+
+.profileHeader {
+  background-color: #000;
+  height: 148px;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.profileHeader > .backgroundImage {
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  background-position: 50% !important;
+  height: 100%;
+  width: 100%;
+  background: url('../assets/profile-background.jpg');
+}
+
+.headerImage > img {
+  border-radius: 50%;
+  height: 8em;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  top: 1.25em;
+  border: 2px solid #f1f1f1;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28);
+}
+
+.userProfileContent {
+  background-color: #222;
+  color: #f1f1f1;
+  text-align: center;
+  padding: 0.4em;
+}
+
+.userProfileContent p {
+  margin: 0;
+  padding: 0.1em;
+  text-transform: capitalize;
+}
+
+.staticMap {
+  width: 100%;
+  height: 100%;
+}
+
+.staticMap > .magImg {
+  width: 100%;
+  height: 100%;
+}
+
+.contact-item {
+  padding: 8px;
+}
+
+
+/* media queries / overrides for devices */
+
+
+/* portrait */
+
+@media (min-device-aspect-ratio: 9/15), (max-device-aspect-ratio: 9/16) {
+  .login-input {
+    margin-bottom: 1.55em;
+  }
+  .login-wrapper {
+    bottom: 3%;
+  }
+}
+
+
+/* 1:1 */
+
+@media (device-aspect-ratio: 1/1) {
+  .login-input {
+    margin-bottom: 0.8em;
+  }
+  .login-wrapper {
+    bottom: 0;
+  }
+  .header-wrapper {
+    top: 2.5em;
+  }
+}

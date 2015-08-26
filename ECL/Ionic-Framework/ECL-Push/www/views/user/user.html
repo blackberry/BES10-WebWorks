@@ -1,0 +1,62 @@
+<!-- Copyright 2015 BlackBerry Ltd.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ express or implied. See the License for the specific language
+ governing permissions and limitations under the License. -->
+
+
+<ion-view view-title="{{ profileUser.name }}" ng-controller="UserCtrl">
+  <ion-content>
+    <div class="profileHeader">
+      <div class="backgroundImage"></div>
+      <div class=" headerImage ">
+        <img ng-src="{{profilePhoto}}" />
+      </div>
+    </div>
+
+    <ion-tabs>
+      <ion-tab icon="ion-information-circled ">
+        <ion-nav-view>
+          <ion-item class="contact-item " ng-repeat="item in profileUser.contact " ng-click="contactUser($index) ">
+            <div class="item-icon-left item-icon-right ">
+              <i class="icon light-grey-icon ion-{{ item.icon }} "></i>
+              <h2>{{item.type}}</h2>
+              <p>{{ item.data }}</p>
+              <i class="icon ion-chevron-right light-icon size-18 "></i>
+            </div>
+          </ion-item>
+          </ion-list>
+        </ion-nav-view>
+      </ion-tab>
+
+      <ion-tab icon="ion-map ">
+        <ion-nav-view>
+          <div class="staticMap ">
+            <img el-on="{click: 'invokeMap(address)'} " class="mapImg " ng-src="https://maps.googleapis.com/maps/api/staticmap?size={{Screen.innerWidth}}x640&markers={{address}}&center={{address}}&zoom=3 " />
+          </div>
+        </ion-nav-view>
+      </ion-tab>
+
+      <ion-tab icon="ion-ios-medkit ">
+        <ion-nav-view>
+          <ion-list>
+            <ion-item ng-repeat="backup in profileUser.backup | orderBy: 'name' " class="item-avatar" ng-click="viewBackupUser(backup)">
+              <img ng-src="{{ backup.image }} " class="md-avatar " />
+              <h2>{{ backup.name }}</h2>
+              <p>{{ backup.title }}</p>
+            </ion-item>
+          </ion-list>
+        </ion-nav-view>
+      </ion-tab>
+    </ion-tabs>
+
+  </ion-content>
+</ion-view>

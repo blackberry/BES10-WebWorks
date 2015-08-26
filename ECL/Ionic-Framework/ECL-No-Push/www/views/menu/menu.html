@@ -1,0 +1,62 @@
+<!-- Copyright 2015 BlackBerry Ltd.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ express or implied. See the License for the specific language
+ governing permissions and limitations under the License. -->
+
+
+<ion-side-menus>
+
+  <ion-pane ion-side-menu-content>
+    <ion-nav-bar class="bar-positive">
+      <ion-nav-back-button class="button-clear">
+      </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
+  </ion-pane>
+
+  <ion-side-menu side="left">
+    <ion-content class="">
+      <div class="sidemenu-header">
+        <div class="headerImage">
+          <img ng-src="data:image/png;base64,{{currentUser.image}}" placeholder="{{placeholderPhoto}}" />
+        </div>
+        <h1 class="title">{{currentUser.name}}</h1>
+      </div>
+
+      <div class="menu-header">
+        Emergency Contact List
+      </div>
+
+      <div id="custom-sidemenu">
+
+        <ion-list>
+          <ion-item class="sidemenu-item" menu-close href="#" href="#/app/org">
+            <a class="item-icon-left" href="#/app/org">
+              <i class="icon ion-ios-list"></i>{{Orgs.title}}
+            </a>
+          </ion-item>
+
+          <!-- <ion-item class="sidemenu-item" nav-clear menu-close href="#/app/about">
+            <a class="item-icon-left" href="#/app/about">
+              <i class="icon ion-information-circled"></i> About the app
+            </a>
+          </ion-item> -->
+
+          <ion-item class="sidemenu-item logout" nav-clear menu-close href="#" ng-click="logout()">
+            <a class="item-icon-left" href="#">
+              <i class="icon ion-android-exit"></i> Logout
+            </a>
+          </ion-item>
+        </ion-list>
+      </div>
+    </ion-content>
+  </ion-side-menu>

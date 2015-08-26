@@ -1,0 +1,30 @@
+<!-- Copyright 2015 BlackBerry Ltd.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ express or implied. See the License for the specific language
+ governing permissions and limitations under the License. -->
+
+
+<ion-view view-title="Login" ng-controller="LoginCtrl" class="loginView">
+  <ion-content>
+    <div class="header-wrapper">
+      <img ng-src="assets/landing-logo.jpg" />
+      <h2>Emergency Contacts</h1>
+    </div>
+
+    <div class="login-wrapper" ng-if="showLogin">
+      <input class="login-input" type="text" placeholder="Username" ng-model="loginData.username">
+      <input class="login-input" type="password" placeholder="Password" ng-model="loginData.password">
+
+      <button class="login-button button button-block button-positive" ng-click="login()">Login</button>
+    </div>
+  </ion-content>
+</ion-view>

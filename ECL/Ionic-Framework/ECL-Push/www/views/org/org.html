@@ -1,0 +1,51 @@
+<!-- Copyright 2015 BlackBerry Ltd.
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ express or implied. See the License for the specific language
+ governing permissions and limitations under the License. -->
+
+
+<ion-view view-title="{{ currentOrg.title }}" ng-controller="OrgCtrl" hide-back-button="true">
+
+  <ion-nav-buttons side="left">
+    <button class="button button-icon icon ion-ios-arrow-left" ng-if="clearSelects" ng-click="clearAllSelectedUsers()">
+      {{selectedUsers.length}}
+    </button>
+    <button menu-toggle="left" class="button button-icon icon ion-navicon" ng-if="!selectMode">
+    </button>
+  </ion-nav-buttons>
+
+  <ion-content>
+    <div class="bar bar-kinda-dark item-input-inset">
+      <label class="item-input-wrapper">
+        <i class="icon ion-ios-search placeholder-icon"></i>
+        <input type="text" placeholder="Name, Email, Etc." ng-model="userSearchString" class="userSearch">
+      </label>
+      <i class="icon clearSearchIcon ion-close-circled placeholder-icon" ng-click="userSearchString = undefined"></i>
+    </div>
+
+    <ion-list>
+      <ion-item ng-repeat="user in currentOrg.list | orderBy: 'name' | filter:userSearchString" class="item-avatar-left item-icon-right" ng-click="viewUser(user.id)">
+        <img class="thumbnail" ng-src="{{ user.image }}" ng-click="selectUser(user, $event)" />
+        <h2>{{ user.name }}</h2>
+        <p>{{ user.title }}</p>
+        <i class="icon light-grey-icon ion-chevron-right "></i>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+
+  <nav mfb-menu menu-state="fabState" position="br" effect="slidein" active-icon="ion-ios-keypad-outline" resting-icon="ion-ios-keypad" toggling-method="click" ng-click="clickFab()">
+    <button mfb-button icon="ion-email" label="Bulk Email" ng-click="bulkEmail()"></button>
+    <button mfb-button icon="ion-chatboxes" label="Bulk SMS" ng-click="bulkSMS()"></button>
+    <button mfb-button icon="ion-ios-briefcase" label="Bulk PIN" ng-click="bulkPIN()"></button>
+  </nav>
+
+</ion-view>

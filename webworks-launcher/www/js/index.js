@@ -46,15 +46,13 @@ var app = {
 
 			// the rest, we can use navigator
 			// NOTE: iOS doesn't allow devs to close an app, no way around this, platform limitation
-		}
-		else {
-			var windowRef = window.open(url, target);
+		} else {
+			var windowRef = cordova.InAppBrowser.open(url, target);
 
 			setTimeout(function() {
 				try {
 					navigator.app.exitApp();
-				}
-				catch (e) {}
+				} catch (e) {}
 			}, 500);
 		}
 	},

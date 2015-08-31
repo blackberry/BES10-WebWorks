@@ -44,6 +44,7 @@ The documentation is quite detailed, but please note it is actually quite easy t
 
 	com.blackberry.app
 	com.blackberry.invoke
+	cordova-plugin-inappbrowser
 
 ## Installation ##
 
@@ -89,6 +90,7 @@ To build and deploy on BlackBerry 10 follow these steps. For other platforms, pl
 
  ```cordova plugin add com.blackberry.appp```
  ```cordova plugin add com.blackberry.invoke```
+ ```cordova plugin add https://github.com/apache/cordova-plugin-inappbrowser.git```
 
 7. Add the Platforms you want to target
 

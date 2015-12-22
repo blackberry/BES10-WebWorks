@@ -9,17 +9,18 @@ This sample shows an example of an Emergency Contact List app. It pulls JSON dat
 **Supported Platforms**
 
 * BlackBerry 10
-* iOS
 * Android
+* iOS
 
 **Tested On**
 
-* BlackBerry 10 (Z30, Passport)
+* BlackBerry (Priv, Z30, Passport)
 * Android (Galaxy S4)
 * iOS (iPhone 5s)
 
 **3rd Party Libraries**
 
+* [Ionic v1.2.1](http://www.ionicframework.com) is licensed under the MIT License
 * [Ionic Material](http://www.ionicmaterial.com) is licensed under the MIT License
 * [Fab Button (ng-mfb)](https://github.com/nobitagit/ng-material-floating-button) is licensed under the MIT License
 * [Underscore.js](http://www.underscorejs.org) is licensed under the MIT License

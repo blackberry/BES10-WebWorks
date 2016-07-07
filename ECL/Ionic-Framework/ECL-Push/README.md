@@ -4,7 +4,7 @@ This sample app shows how to build an Emergency Contact List application for Bla
 
 **Author(s)**
 
-* [Chad Tetreault](http://www.twitter.com/chadtatro)
+* [Chad Tetreault](http://bit.ly/chadli123)
 
 **Contributor(s)**
 

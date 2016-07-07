@@ -4,7 +4,7 @@ This sample shows an example of an Emergency Contact List app. It pulls JSON dat
 
 **Author(s)**
 
-* [Chad Tetreault](http://www.twitter.com/chadtatro)
+* [Chad Tetreault](http://bit.ly/chadli123)
 
 **Supported Platforms**
 
